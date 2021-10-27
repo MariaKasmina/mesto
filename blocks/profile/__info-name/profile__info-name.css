@@ -1,0 +1,11 @@
+.profile__info-name {
+  font-family: Inter, serif;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+  font-style: normal;
+  color: #fff;
+  margin-right: 18px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
