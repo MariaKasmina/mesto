@@ -2,6 +2,7 @@
   opacity: .7;
   size: 1px;
   width: 100%;
-  border-color: #545454;
-  margin: 41px 0 0;
+  margin: 40px 0 0;
+  border: none;
+  border-top: 1px solid #545454;
 }
