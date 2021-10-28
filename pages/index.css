@@ -26,3 +26,6 @@
 @import url(../blocks/element/__caption/element__caption.css);
 @import url(../blocks/element/__caption-text/element__caption-text.css);
 @import url(../blocks/element/__heart/element__heart.css);
+
+/*footer*/
+@import url(../blocks/footer/footer.css);
