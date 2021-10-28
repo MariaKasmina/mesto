@@ -9,3 +9,12 @@
   margin-top: 0;
   margin-bottom: 0;
 }
+
+@media screen and (max-width: 320px){
+  .profile__info-name {
+    font-size: 27px;
+    line-height: 33px;
+    margin-right: 10px;
+    text-align: center;
+  }
+}

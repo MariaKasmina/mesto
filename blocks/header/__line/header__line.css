@@ -6,3 +6,9 @@
   border: none;
   border-top: 1px solid #545454;
 }
+
+@media screen and (max-width: 320px){
+  .header__line {
+    margin-top: 31px;
+  }
+}

@@ -8,3 +8,13 @@
   margin-top: 66px;
   margin-bottom: 60px;
 }
+
+@media screen and (max-width: 320px ){
+  .footer {
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 48px;
+    margin-bottom: 36px;
+    margin-left: 19px;
+  }
+}

@@ -6,3 +6,9 @@
   margin-right: 5px;
   margin-bottom: 1px;
 }
+
+@media screen and (max-width: 320px ){
+  .element__heart {
+    margin-bottom: 4px;
+  }
+}

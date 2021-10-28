@@ -3,8 +3,17 @@
   width: 150px;
   background-color: black;
   padding: 0;
-  border: none;
+  border: 1px solid white;
   background-image: url(../../../images/plus.png);
   background-repeat: no-repeat;
   background-position: center;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 320px){
+  .profile__add-button {
+    margin-top: 32px;
+    width: 100%;
+    background-size: 16px 16px;
+  }
 }
