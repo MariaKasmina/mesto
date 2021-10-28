@@ -2,3 +2,9 @@
   display: flex;
   margin-bottom: 6px;
 }
+
+@media screen and (max-width: 320px){
+  .profile__info-top-row {
+    margin-left: 46px;
+  }
+}
