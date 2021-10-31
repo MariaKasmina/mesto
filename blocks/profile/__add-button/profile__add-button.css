@@ -10,6 +10,12 @@
   box-sizing: border-box;
 }
 
+@media screen and (max-width: 910px){
+  .profile__add-button {
+    margin-right: 20px;
+  }
+}
+
 @media screen and (max-width: 320px){
   .profile__add-button {
     margin-top: 32px;

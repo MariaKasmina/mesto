@@ -9,6 +9,12 @@
   margin-bottom: 60px;
 }
 
+@media screen and (max-width: 910px){
+  .footer {
+    margin-left: 20px;
+  }
+}
+
 @media screen and (max-width: 320px ){
   .footer {
     font-size: 14px;
