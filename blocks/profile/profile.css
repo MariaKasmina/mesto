@@ -6,11 +6,12 @@
   align-items: center;
 }
 
-@media screen and (max-width: 320px){
+@media screen and (max-width: 720px){
   .profile {
     display: block;
     margin-top: 42px;
     margin-left: 19px;
     margin-right: 19px;
+    justify-content: center;
   }
 }
