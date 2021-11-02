@@ -14,11 +14,10 @@
   }
 }
 
-@media screen and (max-width: 320px){
+@media screen and (max-width: 720px){
   .elements {
-    margin-top: 34px;
-    margin-left: 19px;
-    margin-right: 19px;
-    row-gap: 19px;
+    margin-left: calc((100% - 282px) / 2);
+    margin-right: calc((100% - 282px) / 2);
+    margin-top: 33px;
   }
 }

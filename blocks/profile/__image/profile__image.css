@@ -9,8 +9,9 @@
   }
 }
 
-@media screen and (max-width: 320px){
+@media screen and (max-width: 720px){
   .profile__image {
     align-self: center;
+    margin-left: 0;
   }
 }
