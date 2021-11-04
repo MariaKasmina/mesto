@@ -8,16 +8,16 @@
   </head>
   <body class="root">
     <div class="root__container">
-      <section class="header">
-        <img src="images/logo.png" alt class="header__logo">
-      </section>
+      <header class="header">
+        <img src="images/logo.svg" alt="Логотип" class="header__logo">
+      </header>
       <main>
         <section class="profile">
           <div class="profile__info-row">
             <img class="profile__image" alt="Аватар" src="images/avatar.png">
             <div class="profile__info-column">
               <div class="profile__info-top-row">
-                <h3 class="profile__info-name">Жак-Ив Кусто</h3>
+                <h1 class="profile__info-name">Жак-Ив Кусто</h1>
                 <button type="button" class="profile__edit-button">
                 </button>
               </div>
@@ -31,44 +31,44 @@
           <figure class="element">
             <img class="element__image" src="images/elbrus.jpg" alt="место">
             <figcaption class="element__caption">
-              <span class="element__caption-text">Эльбрус</span>
-              <img src="images/heart.svg" alt class="element__heart">
+              <h3 class="element__caption-text">Эльбрус</h3>
+              <button class="element__heart"></button>
             </figcaption>
           </figure>
           <figure class="element">
             <img class="element__image" src="images/kishi.jpg" alt="место">
             <figcaption class="element__caption">
-              <span class="element__caption-text">Кижи</span>
-              <img src="images/heart.svg" alt class="element__heart">
+              <h3 class="element__caption-text">Кижи</h3>
+              <button class="element__heart"></button>
             </figcaption>
           </figure>
           <figure class="element">
             <img class="element__image" src="images/baikal.jpg" alt="место">
             <figcaption class="element__caption">
-              <span class="element__caption-text">Озеро Байкал</span>
-              <img src="images/heart.svg" alt class="element__heart">
+              <h3 class="element__caption-text">Озеро Байкал</h3>
+              <button class="element__heart"></button>
             </figcaption>
           </figure>
           <!-- первые три выше -->
           <figure class="element">
             <img class="element__image" src="images/seliger.jpeg" alt="место">
             <figcaption class="element__caption">
-              <span class="element__caption-text">Озеро Селигер</span>
-              <img src="images/heart.svg" alt class="element__heart">
+              <h3 class="element__caption-text">Озеро Селигер</h3>
+              <button class="element__heart"></button>
             </figcaption>
           </figure>
           <figure class="element">
             <img class="element__image" src="images/altai.jpg" alt="место">
             <figcaption class="element__caption">
-              <span class="element__caption-text">Алтайские горы</span>
-              <img src="images/heart.svg" alt class="element__heart">
+              <h3 class="element__caption-text">Алтайские горы</h3>
+              <button class="element__heart"></button>
             </figcaption>
           </figure>
           <figure class="element">
             <img class="element__image" src="images/lensky.jpg" alt="место">
             <figcaption class="element__caption">
-              <span class="element__caption-text">Ленские столбы</span>
-              <img src="images/heart.svg" alt class="element__heart">
+              <h3 class="element__caption-text">Ленские столбы</h3>
+              <button class="element__heart"></button>
             </figcaption>
           </figure>
         </section>
@@ -78,14 +78,12 @@
       </footer>
       <div class="popup">
         <section class="popup__container">
-          <button class="popup__close-button"></button>
-          <form class="popup__form">
-            <h3 class="popup__form-title">Редактировать профиль</h3>
-            <label for="name"></label>
-            <input type="text" id="name" class="popup__form-item" value="">
-            <label for="profession"></label>
-            <input type="text" id="profession" class="popup__form-item" value="">
-            <input type="submit" class="popup__submit-button" value="Сохранить">
+          <button class="popup__close-button" type="button"></button>
+          <form class="form" name="formOnPopup">
+            <h3 class="form__title">Редактировать профиль</h3>
+            <input type="text" id="name" class="form__item" name="nameInput">
+            <input type="text" id="profession" class="form__item" name="professionInput">
+            <button type="submit" class="form__submit-button">Сохранить</button>
           </form>
         </section>
       </div>

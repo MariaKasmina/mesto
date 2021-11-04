@@ -1,5 +1,5 @@
 .footer {
-  font-family: Inter, serif;
+  font-family: Inter, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -19,7 +19,7 @@
   .footer {
     font-size: 14px;
     line-height: 17px;
-    margin-top: 48px;
+    margin-top: 45px;
     margin-bottom: 36px;
     margin-left: 19px;
   }
