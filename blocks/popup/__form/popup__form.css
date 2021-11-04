@@ -6,3 +6,12 @@
   padding-left: 36px;
   padding-right: 36px;
 }
+
+@media screen and (max-width: 533px) {
+  .popup__form {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-right: 22px;
+    padding-left: 22px;
+  }
+}

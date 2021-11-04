@@ -7,3 +7,12 @@
   margin-bottom: 50px;
   margin-right: 50px;
 }
+
+@media screen and (max-width: 533px) {
+  .popup__form-title {
+    font-size: 18px;
+    line-height: 22px;
+    margin-right: 0;
+    margin-bottom: 75px;
+  }
+}
