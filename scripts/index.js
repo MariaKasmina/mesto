@@ -8,6 +8,8 @@ const nameInput = popUp.querySelector('#name'); // поле для ввода и
 const professionInput = popUp.querySelector('#profession'); // поле для ввода профессии
 const closePopUpBtn = popUp.querySelector('.popup__close-button'); // кнопка закрытия поп-апа
 const submitBtn = popUp.querySelector('.popup__submit-button'); // кнопка сохранения изменений
+const heart = document.querySelectorAll('.element__heart');
+
 
 // обработка события "Клик на кнопку изменить"
 editBtn.addEventListener('click', () => {
@@ -48,7 +50,22 @@ function formSubmitHandler(evt) {
     if (professionInput.textContent !== '') {
         userProfession.textContent = professionInput.textContent;
     }
+    // обработка отправки формы через enter
+    if (evt.keyCode === 13) {
+        popUp.classList.remove('popup_opened');
+    }
 }
 
 form.addEventListener('submit', formSubmitHandler);
+
+// обработка нажатия на сердечко
+function activateHeart() {
+    // на каждое сердце на странице присоединяем событие на клик
+    for(let index =0; index < heart.length; index += 1) {
+        heart[index].addEventListener('click', () => {
+            heart[index].setAttribute('src', 'images/heart_active.png'); // меняем картинку на active
+        }) ;
+    }
+}
+activateHeart();
 

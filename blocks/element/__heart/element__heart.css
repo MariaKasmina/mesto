@@ -5,6 +5,12 @@
   margin-top: 5px;
   margin-right: 5px;
   margin-bottom: 1px;
+  cursor: pointer;
+  transition: opacity 1s linear;
+}
+
+.element__heart:hover {
+  opacity: .5;
 }
 
 @media screen and (max-width: 320px ){

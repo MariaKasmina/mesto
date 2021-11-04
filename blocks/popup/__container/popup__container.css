@@ -2,6 +2,13 @@
   border-radius: 10px;
   background: rgba(255, 255, 255, 1);
   max-width: 430px;
-  min-width: 322px;
+  min-width: 282px;
   position: relative;
+}
+
+@media screen and (max-width: 533px) {
+  .popup__container {
+    margin-right: 19px;
+    margin-left: 19px;
+  }
 }
