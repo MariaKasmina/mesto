@@ -18,4 +18,4 @@
 
 В качестве доработки планируется доработка возможности добавления новых фотографий и смены фото профиля
 
-* [Ссылка на проект в Github Pages](https://mariakasmina.github.io/russian-travel/)
+* [Ссылка на проект в Github Pages](https://mariakasmina.github.io/mesto/)
