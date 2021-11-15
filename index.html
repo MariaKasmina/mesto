@@ -79,12 +79,14 @@
       <div class="popup">
         <section class="popup__container">
           <button class="popup__close-button" type="button"></button>
-          <form class="form" name="form-on-popup">
-            <h3 class="form__title">Редактировать профиль</h3>
-            <input type="text" id="name" class="form__item" name="name-input">
-            <input type="text" id="profession" class="form__item" name="profession-input">
-            <button type="submit" class="form__submit-button">Сохранить</button>
-          </form>
+          <template id="form">
+            <form class="form" name="form-on-popup">
+              <h3 class="form__title">Редактировать профиль</h3>
+              <input type="text" id="name" class="form__item" name="name-input">
+              <input type="text" id="additionalInfo" class="form__item" name="additional-info-input">
+              <button type="submit" class="form__submit-button">Сохранить</button>
+            </form>
+          </template>
         </section>
       </div>
     </div>
