@@ -64,8 +64,8 @@ closePopUpBtn.addEventListener('click', () => {
 addNewLocationBtn.addEventListener('click', () => {
     const clonedForm = document.querySelector('#form').content.querySelector('.form').cloneNode(true);
     clonedForm.querySelector('.form__title').textContent = 'Новое место';
-    clonedForm.querySelector('#name').value = 'Название';
-    clonedForm.querySelector('#additionalInfo').value = 'Ссылка на картинку';
+    clonedForm.querySelector('#name').placeholder = 'Название';
+    clonedForm.querySelector('#additionalInfo').placeholder = 'Ссылка на картинку';
     // TODO: настроить маргины для адаптивности обоих поп-апов
     clonedForm.querySelector('.form__title').style.marginRight = '200px';
     clonedForm.querySelectorAll('.form__item').forEach((element) => {
