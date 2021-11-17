@@ -28,7 +28,7 @@
           </button>
         </section>
         <section class="elements">
-          <figure class="element">
+         <!-- <figure class="element">
             <img class="element__image" src="images/elbrus.jpg" alt="место">
             <figcaption class="element__caption">
               <h3 class="element__caption-text">Эльбрус</h3>
@@ -52,7 +52,6 @@
             </figcaption>
             <button class="element__delete-btn" type="button"></button>
           </figure>
-          <!-- первые три выше -->
           <figure class="element">
             <img class="element__image" src="images/seliger.jpeg" alt="место">
             <figcaption class="element__caption">
@@ -76,7 +75,7 @@
               <button type="button" class="element__heart"></button>
             </figcaption>
             <button class="element__delete-btn" type="button"></button>
-          </figure>
+          </figure>-->
         </section>
       </main>
       <footer class="footer">
@@ -102,7 +101,19 @@
           <p class="image__description"></p>
         </section>
       </div>
+
+      <template id="element-template">
+        <figure class="element">
+          <img class="element__image" src="#" alt="место">
+          <figcaption class="element__caption">
+            <h3 class="element__caption-text"></h3>
+            <button type="button" class="element__heart"></button>
+          </figcaption>
+          <button class="element__delete-btn" type="button"></button>
+        </figure>
+      </template>
     </div>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/template.js" type="module"></script>
   </body>
 </html>
