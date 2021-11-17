@@ -1,5 +1,6 @@
 const cardContainer = document.querySelector('.elements');
 const addButton = document.querySelector('.profile__add-button');
+const deleteBtn = document.querySelectorAll('.element__delete-btn');
 
 import {initialCards} from "./data/data_for_template.js";
 
@@ -16,12 +17,23 @@ function addCard(title, url) {
         // eventTarget.classList.toggle('song__like_active');
     });
 
+    cardElement.querySelector('.element__delete-btn').addEventListener('click', function () {
+        cardElement.remove();
+        if(document.querySelector('.element') === null){
+            renderNoCards();
+        }
+    });
+
     cardContainer.append(cardElement);
 }
 
 initialCards.map((card, index) => {
     addCard(card.name, card.link);
 });
+
+function renderNoCards(){
+    document.querySelector('.elements__no-items').style.display = 'block';
+}
 
 addButton.addEventListener('click', function () {
    /* const artist = document.querySelector('.input__text_type_artist');
