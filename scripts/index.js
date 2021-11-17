@@ -1,24 +1,44 @@
 const userName = document.querySelector('.profile__info-name'); // поле с именем пользователя в хедере
 const userProfession = document.querySelector('.profile__info-description'); // поле  профессией пользователя в хедере
 const editBtn = document.querySelector('.profile__edit-button'); // кнопка Изменить в хедере
-const popUp = document.querySelector('.popup'); // элемент поп-ап
-const popUpContent = popUp.querySelector('.popup__container');
+const popUpWithForm = document.querySelector('.popup_with_form'); // элемент поп-ап с формой
+const popUpWithImage = document.querySelector('.popup_with_image');
+const popUpContent = popUpWithForm.querySelector('.popup__container');
 let form = document.querySelector('#form'); // форма на поп-апе
 const closePopUpBtn = document.querySelector('.popup__close-button'); // кнопка закрытия поп-апа
 const addNewLocationBtn = document.querySelector('.profile__add-button');
 
+/*
+const cardImage = document.querySelectorAll('.element__image'); // картинки на карточках
+
+cardImage[3].addEventListener('click', (evt) => {
+    const eventTarget = evt.target;
+    const image = popUpWithImage.querySelector('.popup__image');
+    image.src = '../../'.concat(eventTarget.getAttribute('src'));
+    console.log(image.width)
+    console.log(image.height)
+    if(image.width > image.height) {
+        image.width = 816;
+        image.height = 540;
+    } else {
+        image.width = 433;
+        image.height = 540;
+    }
+    openPopup(popUpWithImage);
+});/
+
 /**
  * Функция для действий по открытию поп-апа
  */
-function openPopup() {
-    popUp.classList.add('popup_opened');
+function openPopup(element) {
+    element.classList.add('popup_opened');
 }
 
 /**
  * Функция для закрытия поп-апа
  */
-function closePopup() {
-    popUp.classList.remove('popup_opened');
+function closePopup(element) {
+    element.classList.remove('popup_opened');
 }
 
 // обработка события "Отправка формы"
@@ -28,7 +48,7 @@ function formSubmitHandler(evt) {
     const professionInput = document.querySelector('.form').querySelector('#additionalInfo'); // поле для ввода профессии
     userName.textContent = nameInput.value;
     userProfession.textContent = professionInput.value;
-    closePopup();
+    closePopup(popUpWithForm);
     // удаляем скопированный объект формы из DOM
     document.querySelector('.form').remove();
 }
@@ -51,12 +71,12 @@ function addEventListenerOnSubmit() {
 // обработка события "Клик на кнопку изменить"
 editBtn.addEventListener('click', () => {
     setNameAndProfessionOnPopup();
-    openPopup();
+    openPopup(popUpWithForm);
 });
 
 // обработка события "Клик на кнопку закрыть"
 closePopUpBtn.addEventListener('click', () => {
-    closePopup();
+    closePopup(popUpWithForm);
     // удаляем скопированный объект формы из DOM
     document.querySelector('.form').remove();
 });
@@ -73,5 +93,5 @@ addNewLocationBtn.addEventListener('click', () => {
     });
     clonedForm.querySelector('.form__submit-button').textContent = 'Создать';
     popUpContent.append(clonedForm);
-    openPopup();
+    openPopup(popUpWithForm);
 });
