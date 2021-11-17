@@ -82,7 +82,7 @@
       <footer class="footer">
         &copy; 2021 Mesto Russia
       </footer>
-      <div class="popup">
+      <div class="popup popup_with_form">
         <section class="popup__container">
           <button class="popup__close-button" type="button"></button>
           <template id="form">
@@ -93,6 +93,13 @@
               <button type="submit" class="form__submit-button">Сохранить</button>
             </form>
           </template>
+        </section>
+      </div>
+      <div class="popup popup_with_image">
+        <section class="popup__container">
+          <button class="popup__close-button" type="button"></button>
+          <img class="popup__image" src="#" alt="Фото места">
+          <p class="image__description"></p>
         </section>
       </div>
     </div>
