@@ -4,7 +4,7 @@ const deleteBtn = document.querySelectorAll('.element__delete-btn');
 
 import {initialCards} from "./data/data_for_template.js";
 
-function addCard(title, url) {
+export function addCard(title, url) {
     const cardTemplate = document.querySelector('#element-template').content;
     const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
@@ -24,7 +24,7 @@ function addCard(title, url) {
         }
     });
 
-    cardContainer.append(cardElement);
+    cardContainer.prepend(cardElement);
 }
 
 initialCards.map((card, index) => {
@@ -34,14 +34,3 @@ initialCards.map((card, index) => {
 function renderNoCards(){
     document.querySelector('.elements__no-items').style.display = 'block';
 }
-
-addButton.addEventListener('click', function () {
-   /* const artist = document.querySelector('.input__text_type_artist');
-    const title = document.querySelector('.input__text_type_title');
-
-    addCard(artist.value, title.value);
-    renderHasSongs();
-
-    artist.value = '';
-    title.value = '';*/
-});

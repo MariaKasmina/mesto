@@ -8,6 +8,8 @@ let form = document.querySelector('#form'); // форма на поп-апе
 const closePopUpBtn = document.querySelector('.popup__close-button'); // кнопка закрытия поп-апа
 const addNewLocationBtn = document.querySelector('.profile__add-button');
 
+
+import {addCard} from "./template.js";
 /*
 const cardImage = document.querySelectorAll('.element__image'); // картинки на карточках
 
@@ -88,10 +90,19 @@ addNewLocationBtn.addEventListener('click', () => {
     clonedForm.querySelector('#additionalInfo').placeholder = 'Ссылка на картинку';
     // TODO: настроить маргины для адаптивности обоих поп-апов
     clonedForm.querySelector('.form__title').style.marginRight = '200px';
+    // TODO: настроить цвет через селектор для плейсхолдера, а не всего элемента
     clonedForm.querySelectorAll('.form__item').forEach((element) => {
         element.style.color = 'rgba(196, 196, 196, 1)'
     });
     clonedForm.querySelector('.form__submit-button').textContent = 'Создать';
+
+    clonedForm.addEventListener('submit', function (evt) {
+        evt.preventDefault();
+        const place = clonedForm.querySelector('#name').value;
+        const url = clonedForm.querySelector('#additionalInfo').value;
+        addCard(place, url);
+        closePopup(popUpWithForm);
+    });
     popUpContent.append(clonedForm);
     openPopup(popUpWithForm);
 });
