@@ -12,9 +12,9 @@ export function addCard(title, url) {
     cardElement.querySelector('.element__image').src = url;
 
     cardElement.querySelector('.element__heart').addEventListener('click', function(evt) {
-        // console.log(evt.target)
-        // const eventTarget = evt.target;
-        // eventTarget.classList.toggle('song__like_active');
+        console.log(evt.target)
+        const eventTarget = evt.target;
+        eventTarget.classList.toggle('element__heart_active');
     });
 
     cardElement.querySelector('.element__delete-btn').addEventListener('click', function () {
