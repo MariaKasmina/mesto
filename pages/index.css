@@ -27,6 +27,7 @@
 @import url(../blocks/element/__caption/element__caption.css);
 @import url(../blocks/element/__caption-text/element__caption-text.css);
 @import url(../blocks/element/__heart/element__heart.css);
+@import url(../blocks/element/__heart/_active/element__heart_active.css);
 @import url(../blocks/element/__delete-btn/element__delete-btn.css);
 
 /*footer*/
