@@ -1,8 +1,8 @@
 const cardContainer = document.querySelector('.elements');
-const addButton = document.querySelector('.profile__add-button');
-const deleteBtn = document.querySelectorAll('.element__delete-btn');
+const popUpWithImage = document.querySelector('.popup_with_image');
 
 import {initialCards} from "./data/data_for_template.js";
+import {openPopup} from "./popup.js";
 
 export function addCard(title, url) {
     const cardTemplate = document.querySelector('#element-template').content;
@@ -12,10 +12,28 @@ export function addCard(title, url) {
     cardElement.querySelector('.element__image').src = url;
 
     cardElement.querySelector('.element__heart').addEventListener('click', function(evt) {
-        console.log(evt.target)
         const eventTarget = evt.target;
         eventTarget.classList.toggle('element__heart_active');
     });
+
+    cardElement.querySelector('.element__image').addEventListener('click', function (evt) {
+        console.log(1)
+        const eventTarget = evt.target;
+        const image = popUpWithImage.querySelector('.popup__image');
+        image.src = eventTarget.getAttribute('src');
+        console.log(image)
+        const desc = popUpWithImage.querySelector('.popup__image-description');
+        desc.textContent = cardElement.querySelector('.element__caption-text').textContent;
+        console.log(desc)
+        if (image.width > image.height) {
+            image.width = 816;
+            image.height = 540;
+        } else {
+            image.width = 433;
+            image.height = 540;
+        }
+        openPopup(popUpWithImage)
+    })
 
     cardElement.querySelector('.element__delete-btn').addEventListener('click', function () {
         cardElement.remove();
