@@ -7,41 +7,10 @@ const popUpContent = popUpWithForm.querySelector('.popup__container');
 let form = document.querySelector('#form'); // форма на поп-апе
 const closePopUpBtn = document.querySelector('.popup__close-button'); // кнопка закрытия поп-апа
 const addNewLocationBtn = document.querySelector('.profile__add-button');
-
+const popUpWithImageCloseBtn = popUpWithImage.querySelector('.popup__close-button');
 
 import {addCard} from "./template.js";
-/*
-const cardImage = document.querySelectorAll('.element__image'); // картинки на карточках
-
-cardImage[3].addEventListener('click', (evt) => {
-    const eventTarget = evt.target;
-    const image = popUpWithImage.querySelector('.popup__image');
-    image.src = '../../'.concat(eventTarget.getAttribute('src'));
-    console.log(image.width)
-    console.log(image.height)
-    if(image.width > image.height) {
-        image.width = 816;
-        image.height = 540;
-    } else {
-        image.width = 433;
-        image.height = 540;
-    }
-    openPopup(popUpWithImage);
-});/
-
-/**
- * Функция для действий по открытию поп-апа
- */
-function openPopup(element) {
-    element.classList.add('popup_opened');
-}
-
-/**
- * Функция для закрытия поп-апа
- */
-function closePopup(element) {
-    element.classList.remove('popup_opened');
-}
+import {openPopup, closePopup} from "./popup.js";
 
 // обработка события "Отправка формы"
 function formSubmitHandler(evt) {
@@ -102,7 +71,12 @@ addNewLocationBtn.addEventListener('click', () => {
         const url = clonedForm.querySelector('#additionalInfo').value;
         addCard(place, url);
         closePopup(popUpWithForm);
+        document.querySelector('.form').remove();
     });
     popUpContent.append(clonedForm);
     openPopup(popUpWithForm);
+});
+
+popUpWithImageCloseBtn.addEventListener('click', function () {
+    closePopup(popUpWithImage);
 });
