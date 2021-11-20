@@ -17,20 +17,17 @@ export function addCard(title, url) {
     });
 
     cardElement.querySelector('.element__image').addEventListener('click', function (evt) {
-        console.log(1)
         const eventTarget = evt.target;
         const image = popUpWithImage.querySelector('.popup__image');
         image.src = eventTarget.getAttribute('src');
-        console.log(image)
         const desc = popUpWithImage.querySelector('.popup__image-description');
         desc.textContent = cardElement.querySelector('.element__caption-text').textContent;
-        console.log(desc)
         if (image.width > image.height) {
             image.width = 816;
-            image.height = 540;
+            image.height = image.width / 1.51;
         } else {
             image.width = 433;
-            image.height = 540;
+            image.height = image.width * 1.25;
         }
         openPopup(popUpWithImage)
     })
