@@ -39,6 +39,33 @@ function addEventListenerOnSubmit() {
     form.addEventListener('submit', formSubmitHandler);
 }
 
+// обработка клика на кнопку добавления сущности
+addNewLocationBtn.addEventListener('click', () => {
+    const clonedForm = document.querySelector('#form').content.querySelector('.form').cloneNode(true);
+    // задаем значения для новой формы
+    clonedForm.querySelector('.form__title').textContent = 'Новое место';
+    clonedForm.querySelector('#name').placeholder = 'Название';
+    clonedForm.querySelector('#additionalInfo').placeholder = 'Ссылка на картинку';
+    clonedForm.querySelector('.form__submit-button').textContent = 'Создать';
+    // обрабатываем отправку формы
+    clonedForm.addEventListener('submit', function (evt) {
+        evt.preventDefault();
+        const place = clonedForm.querySelector('#name').value;
+        const url = clonedForm.querySelector('#additionalInfo').value;
+        // создаем карточку
+        addCard(place, url);
+        closePopup(popUpWithForm);
+        // удаляем созданную форму
+        document.querySelector('.form').remove();
+    });
+    popUpContent.append(clonedForm);
+    openPopup(popUpWithForm);
+});
+
+popUpWithImageCloseBtn.addEventListener('click', function () {
+    closePopup(popUpWithImage);
+});
+
 // обработка события "Клик на кнопку изменить"
 editBtn.addEventListener('click', () => {
     setNameAndProfessionOnPopup();
@@ -50,33 +77,4 @@ closePopUpBtn.addEventListener('click', () => {
     closePopup(popUpWithForm);
     // удаляем скопированный объект формы из DOM
     document.querySelector('.form').remove();
-});
-
-addNewLocationBtn.addEventListener('click', () => {
-    const clonedForm = document.querySelector('#form').content.querySelector('.form').cloneNode(true);
-    clonedForm.querySelector('.form__title').textContent = 'Новое место';
-    clonedForm.querySelector('#name').placeholder = 'Название';
-    clonedForm.querySelector('#additionalInfo').placeholder = 'Ссылка на картинку';
-    // TODO: настроить маргины для адаптивности обоих поп-апов
-    clonedForm.querySelector('.form__title').style.marginRight = '200px';
-    // TODO: настроить цвет через селектор для плейсхолдера, а не всего элемента
-    clonedForm.querySelectorAll('.form__item').forEach((element) => {
-        element.style.color = 'rgba(196, 196, 196, 1)'
-    });
-    clonedForm.querySelector('.form__submit-button').textContent = 'Создать';
-
-    clonedForm.addEventListener('submit', function (evt) {
-        evt.preventDefault();
-        const place = clonedForm.querySelector('#name').value;
-        const url = clonedForm.querySelector('#additionalInfo').value;
-        addCard(place, url);
-        closePopup(popUpWithForm);
-        document.querySelector('.form').remove();
-    });
-    popUpContent.append(clonedForm);
-    openPopup(popUpWithForm);
-});
-
-popUpWithImageCloseBtn.addEventListener('click', function () {
-    closePopup(popUpWithImage);
 });

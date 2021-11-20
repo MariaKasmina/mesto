@@ -6,6 +6,7 @@
   margin-top: 0;
   margin-bottom: 50px;
   margin-right: 50px;
+  width: calc(430px - 2 * 36px);
 }
 
 @media screen and (max-width: 533px) {
