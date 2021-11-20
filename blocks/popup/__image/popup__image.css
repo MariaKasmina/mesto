@@ -3,10 +3,17 @@
   max-width: 100%;
 }
 
+@media screen and (max-width: 920px){
+  .popup__image {
+    width: calc(768px * 0.75);
+    height: calc(768px * 0.75);
+  }
+}
+
 @media screen and (max-width: 768px){
   .popup__image {
-    width: calc(768px * 0.85);
-    height: calc(768px * 0.85);
+    width: calc(768px * 0.55);
+    height: calc(768px * 0.65);
   }
 }
 
