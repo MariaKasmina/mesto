@@ -11,6 +11,13 @@
   background: transparent;
 }
 
+@media screen and (max-width: 895px){
+  .popup_with_image .popup__container , .popup__container{
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
 @media screen and (max-width: 533px) {
   .popup__container {
     margin-right: 19px;

@@ -1,33 +1,6 @@
 .popup__image {
-  max-height: 100%;
-  max-width: 100%;
-}
-
-@media screen and (max-width: 920px){
-  .popup__image {
-    width: calc(768px * 0.75);
-    height: calc(768px * 0.75);
-  }
-}
-
-@media screen and (max-width: 768px){
-  .popup__image {
-    width: calc(768px * 0.55);
-    height: calc(768px * 0.65);
-  }
-}
-
-
-@media screen and (max-width: 426px){
-  .popup__image {
-    width: calc(426px * 0.75);
-    height: calc(426px * 0.75 * 1.25);
-  }
-}
-
-@media screen and (max-width: 320px){
-  .popup__image {
-    width: 240px;
-    height: calc(240px * 1.25);
-  }
+  max-height: 540px;
+  max-width: 816px;
+  min-width: 240px;
+  min-height: 299px;
 }

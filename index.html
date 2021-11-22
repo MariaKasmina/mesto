@@ -34,17 +34,26 @@
       <footer class="footer">
         &copy; 2021 Mesto Russia
       </footer>
-      <div class="popup popup_with_form">
+      <div class="popup change_personal_info_popup">
         <section class="popup__container">
           <button class="popup__close-button" type="button"></button>
-          <template id="form">
-            <form class="form" name="form-on-popup">
-              <h3 class="form__title">Редактировать профиль</h3>
-              <input type="text" id="name" class="form__item" name="name-input">
-              <input type="text" id="additionalInfo" class="form__item" name="additional-info-input">
-              <button type="submit" class="form__submit-button">Сохранить</button>
-            </form>
-          </template>
+          <form class="form" name="form-on-popup">
+            <h3 class="form__title">Редактировать профиль</h3>
+            <input type="text" id="name" class="form__item" name="name-input">
+            <input type="text" id="additionalInfo" class="form__item" name="additional-info-input">
+            <button type="submit" class="form__submit-button">Сохранить</button>
+          </form>
+        </section>
+      </div>
+      <div class="popup add_new_place_popup">
+        <section class="popup__container">
+          <button class="popup__close-button" type="button"></button>
+          <form class="form" name="form-on-popup">
+            <h3 class="form__title">Новое место</h3>
+            <input type="text" id="place" class="form__item" name="place-input" placeholder="Название">
+            <input type="url" id="imageUrl" class="form__item" name="image-url-input" placeholder="Ссылка на картинку">
+            <button type="submit" class="form__submit-button">Сохранить</button>
+          </form>
         </section>
       </div>
       <div class="popup popup_with_image">
