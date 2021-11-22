@@ -1,80 +1,85 @@
+import {openPopup, closePopup} from "./popup.js";
+import {createCard, renderCard} from "./template.js";
+
 const userName = document.querySelector('.profile__info-name'); // поле с именем пользователя в хедере
 const userProfession = document.querySelector('.profile__info-description'); // поле  профессией пользователя в хедере
 const editBtn = document.querySelector('.profile__edit-button'); // кнопка Изменить в хедере
-const popUpWithForm = document.querySelector('.popup_with_form'); // элемент поп-ап с формой
-const popUpWithImage = document.querySelector('.popup_with_image');
-const popUpContent = popUpWithForm.querySelector('.popup__container');
-let form = document.querySelector('#form'); // форма на поп-апе
-const closePopUpBtn = document.querySelector('.popup__close-button'); // кнопка закрытия поп-апа
-const addNewLocationBtn = document.querySelector('.profile__add-button');
-const popUpWithImageCloseBtn = popUpWithImage.querySelector('.popup__close-button');
+const changePersonalInfoPopUp = document.querySelector('.change_personal_info_popup'); // поп-ап изменения данных профиля
+const addNewPlacePopUp = document.querySelector('.add_new_place_popup'); // поп-ап добавления карточки
+const changePersonalInfoForm = document.querySelector('.change_personal_info_popup .form'); // форма изменения данных пользователя
+const addNewLocationForm = document.querySelector('.add_new_place_popup .form'); // форма добавления новой карточки
+const nameInput = document.querySelector('#name'); // поле для ввода имени
+const professionInput = document.querySelector('#additionalInfo'); // поле для ввода профессии
+const place = addNewLocationForm.querySelector('#place'); // поле для ввода названия карточки
+const url = addNewLocationForm.querySelector('#imageUrl'); // поле для ввода ссылки на картинку
+const closeChangePersonalInfoPopUpBtn = document.querySelector('.change_personal_info_popup .popup__close-button');
+const closeAddNewPlacePopUpBtn = document.querySelector('.add_new_place_popup .popup__close-button');
+const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
+const popUpWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
+const popUpWithImageCloseBtn = popUpWithImage.querySelector('.popup__close-button'); // кнопка закрытия поп-апа с картинкой
 
-import {addCard} from "./template.js";
-import {openPopup, closePopup} from "./popup.js";
+/**
+ * Функция для действий по открытию поп-апа изменения данных профиля
+ */
+function openChangePersonalInfoPopup(element) {
+    element.classList.add('popup_opened');
+    nameInput.value = userName.textContent;
+    professionInput.value = userProfession.textContent;
+}
 
-// обработка события "Отправка формы"
-function formSubmitHandler(evt) {
+/**
+ * Обработка события "Клик на кнопку изменить"
+ */
+editBtn.addEventListener('click', () => {
+    openChangePersonalInfoPopup(changePersonalInfoPopUp);
+});
+
+/**
+ * Обработка события "Клик на кнопку добавления новой карточки"
+ */
+addNewLocationBtn.addEventListener('click', () => {
+    place.value = '';
+    url.value = '';
+    openPopup(addNewPlacePopUp);
+});
+
+/**
+ * Обработка события "Клик на кнопку закрытия поп-апа изменения данных о пользователе"
+ */
+closeChangePersonalInfoPopUpBtn.addEventListener('click', () => {
+   closePopup(changePersonalInfoPopUp);
+});
+
+/**
+ * Обработка события "Клик на кнопку закрытия поп-апа добавления новой карточки"
+ */
+closeAddNewPlacePopUpBtn.addEventListener('click', () => {
+    closePopup(addNewPlacePopUp);
+});
+
+/**
+ * Обработка события "Отправка формы изменения данных пользователя"
+ */
+changePersonalInfoForm.addEventListener('submit', (evt) => {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    const nameInput = document.querySelector('.form').querySelector('#name'); // поле для ввода имени
-    const professionInput = document.querySelector('.form').querySelector('#additionalInfo'); // поле для ввода профессии
     userName.textContent = nameInput.value;
     userProfession.textContent = professionInput.value;
-    closePopup(popUpWithForm);
-    // удаляем скопированный объект формы из DOM
-    document.querySelector('.form').remove();
-}
-
-// переносит данные из хедера на поп-ап
-function setNameAndProfessionOnPopup() {
-    const clonedForm = document.querySelector('#form').content.querySelector('.form').cloneNode(true);
-    clonedForm.querySelector('#name').value = userName.textContent;
-    clonedForm.querySelector('#additionalInfo').value = userProfession.textContent;
-    popUpContent.append(clonedForm);
-    addEventListenerOnSubmit();
-}
-
-function addEventListenerOnSubmit() {
-    // указываем, что теперь форма не шаблон, а конкретный элемент на странице
-    form = document.querySelector('.form');
-    form.addEventListener('submit', formSubmitHandler);
-}
-
-// обработка клика на кнопку добавления сущности
-addNewLocationBtn.addEventListener('click', () => {
-    const clonedForm = document.querySelector('#form').content.querySelector('.form').cloneNode(true);
-    // задаем значения для новой формы
-    clonedForm.querySelector('.form__title').textContent = 'Новое место';
-    clonedForm.querySelector('#name').placeholder = 'Название';
-    clonedForm.querySelector('#additionalInfo').placeholder = 'Ссылка на картинку';
-    clonedForm.querySelector('.form__submit-button').textContent = 'Создать';
-    // обрабатываем отправку формы
-    clonedForm.addEventListener('submit', function (evt) {
-        evt.preventDefault();
-        const place = clonedForm.querySelector('#name').value;
-        const url = clonedForm.querySelector('#additionalInfo').value;
-        // создаем карточку
-        addCard(place, url);
-        closePopup(popUpWithForm);
-        // удаляем созданную форму
-        document.querySelector('.form').remove();
-    });
-    popUpContent.append(clonedForm);
-    openPopup(popUpWithForm);
+    closePopup(changePersonalInfoPopUp);
 });
 
+/**
+ * Обработка события "Отпавка формы добавления новой карточки"
+ */
+addNewLocationForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    renderCard(createCard(place.value, url.value), 'prepend');
+    closePopup(addNewPlacePopUp);
+    document.querySelector('.elements__no-items').style.display = 'none';
+});
+
+/**
+ * Обработка события "Клик на кнопку закрытия поп-апа с картинкой"
+ */
 popUpWithImageCloseBtn.addEventListener('click', function () {
     closePopup(popUpWithImage);
-});
-
-// обработка события "Клик на кнопку изменить"
-editBtn.addEventListener('click', () => {
-    setNameAndProfessionOnPopup();
-    openPopup(popUpWithForm);
-});
-
-// обработка события "Клик на кнопку закрыть"
-closePopUpBtn.addEventListener('click', () => {
-    closePopup(popUpWithForm);
-    // удаляем скопированный объект формы из DOM
-    document.querySelector('.form').remove();
 });
