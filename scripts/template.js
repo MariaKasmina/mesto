@@ -31,7 +31,6 @@ export function renderCard(card, placingMethod = 'append') {
 export function createCard(title, url) {
     const cardTemplate = document.querySelector('#element-template').content;
     const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-
     cardElement.querySelector('.element__caption-text').textContent = title;
     cardElement.querySelector('.element__image').src = url;
 
