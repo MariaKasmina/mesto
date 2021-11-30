@@ -14,8 +14,3 @@
 .form__item::placeholder {
   color: rgba(196, 196, 196, 1);
 }
-
-.form__item:invalid {
-  margin-bottom: 5px;
-  border-bottom: 1px solid #F00;
-}
