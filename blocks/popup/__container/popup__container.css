@@ -5,6 +5,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  cursor: auto;
 }
 
 .popup_with_image .popup__container {
