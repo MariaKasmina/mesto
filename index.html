@@ -39,10 +39,10 @@
           <button class="popup__close-button" type="button"></button>
           <form class="form form_type_edit" name="form-on-popup" novalidate>
             <h3 class="form__title">Редактировать профиль</h3>
-            <input type="text" id="name-input" class="form__item" name="name-input" minlength="2" maxlength="40" required>
-            <span class="form__input-error name-input-error" id='name-input-error'></span>
-            <input type="text" id="additional-info-input" class="form__item" name="additional-info-input" minlength="2" maxlength="200" required>
-            <span class="form__input-error additional-info-input-error" id='additional-info-input-error'></span>
+            <input type="text" id="name" class="form__item" name="name-input" minlength="2" maxlength="40" required>
+            <span class="form__input-error name-input-error" id='nameInputError'></span>
+            <input type="text" id="additionalInfo" class="form__item" name="additional-info-input" minlength="2" maxlength="200" required>
+            <span class="form__input-error additional-info-input-error" id='additionalInfoInputError'></span>
             <button type="submit" class="form__submit-button">Сохранить</button>
           </form>
         </section>
@@ -50,10 +50,12 @@
       <div class="popup popup_add_new-place">
         <section class="popup__container">
           <button class="popup__close-button" type="button"></button>
-          <form class="form form_type_add" name="form-on-popup">
+          <form class="form form_type_add" name="form-on-popup" novalidate>
             <h3 class="form__title">Новое место</h3>
-            <input type="text" id="place" class="form__item" name="place-input" placeholder="Название">
-            <input type="url" id="imageUrl" class="form__item" name="image-url-input" placeholder="Ссылка на картинку">
+            <input type="text" id="place" class="form__item" name="place-input" placeholder="Название" minlength="2" maxlength="30" required>
+            <span class="form__input-error place-input-error" id='placeInputError'></span>
+            <input type="url" id="imageUrl" class="form__item" name="image-url-input" placeholder="Ссылка на картинку" required>
+            <span class="form__input-error image-url-input-error" id='imageUrlInputError'></span>
             <button type="submit" class="form__submit-button">Сохранить</button>
           </form>
         </section>
