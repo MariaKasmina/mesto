@@ -17,6 +17,7 @@ const closeAddNewPlacePopUpBtn = document.querySelector('.popup_add_new-place .p
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
 const popUpWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
 const popUpWithImageCloseBtn = popUpWithImage.querySelector('.popup__close-button'); // кнопка закрытия поп-апа с картинкой
+const submitBtn = document.querySelectorAll('.form__submit-button');
 
 /**
  * Функция для действий по открытию поп-апа изменения данных профиля
@@ -44,6 +45,9 @@ function submitChangePersonalInfoForm(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     userName.textContent = nameInput.value;
     userProfession.textContent = professionInput.value;
+    submitBtn.forEach((btn) => {
+        btn.classList.add('form__submit-button_type_inactive');
+    });
     closePopup(changePersonalInfoPopUp);
 }
 
@@ -56,6 +60,9 @@ function submitAddNewLocationForm(evt) {
     renderCard(createCard(place.value, url.value), 'prepend');
     closePopup(addNewPlacePopUp);
     document.querySelector('.elements__no-items').style.display = 'none';
+    submitBtn.forEach((btn) => {
+        btn.classList.add('form__submit-button_type_inactive');
+    });
 }
 
 /**
