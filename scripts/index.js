@@ -18,6 +18,7 @@ const addNewLocationBtn = document.querySelector('.profile__add-button'); // к�
 const popUpWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
 const popUpWithImageCloseBtn = popUpWithImage.querySelector('.popup__close-button'); // кнопка закрытия поп-апа с картинкой
 const submitBtn = document.querySelectorAll('.form__submit-button');
+const popupContainer = document.querySelectorAll('.popup__container');
 
 /**
  * Функция для действий по открытию поп-апа изменения данных профиля
@@ -108,4 +109,42 @@ addNewLocationForm.addEventListener('submit', (evt) => submitAddNewLocationForm(
  */
 popUpWithImageCloseBtn.addEventListener('click', function () {
     closePopup(popUpWithImage);
+});
+
+/**
+ * Отмена всплытия события клика на оверлей в области непосредственно поп-апа
+ */
+popupContainer.forEach((container) => {
+    container.addEventListener('click', (evt => { evt.stopPropagation(); }));
+});
+
+/**
+ * Закрытие поп-апа кликом на оверлей
+ */
+changePersonalInfoPopUp.addEventListener('click', () => {
+    closePopup(changePersonalInfoPopUp);
+});
+
+/**
+ * Закрытие поп-апа кликом на оверлей
+ */
+addNewPlacePopUp.addEventListener('click', () => {
+    closePopup(addNewPlacePopUp);
+});
+
+/**
+ * Закрытие поп-апа кликом на оверлей
+ */
+popUpWithImage.addEventListener('click', () => {
+    closePopup(popUpWithImage);
+});
+
+/**
+ * Закрытие поп-апа кликом на esc
+ */
+document.addEventListener('keydown', (evt) => {
+    const popup = document.querySelector('.popup_opened');
+    if(evt.key === 'Escape') {
+        closePopup(popup);
+    }
 });
