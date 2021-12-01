@@ -17,8 +17,10 @@ const closeAddNewPlacePopUpBtn = document.querySelector('.popup_add_new-place .p
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
 const popUpWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
 const popUpWithImageCloseBtn = popUpWithImage.querySelector('.popup__close-button'); // кнопка закрытия поп-апа с картинкой
-const submitBtn = document.querySelectorAll('.form__submit-button');
-const popupContainer = document.querySelectorAll('.popup__container');
+const changePersonalInfoPopUpSubmitBtn = changePersonalInfoPopUp.querySelector('.form__submit-button'); // кнопка отправки формы
+const addNewPlacePopUpSubmitBtn = addNewPlacePopUp.querySelector('.form__submit-button'); // кнопка отправки формы
+const popupContainers = document.querySelectorAll('.popup__container');
+const popups = document.querySelectorAll('.popup');
 
 /**
  * Функция для действий по открытию поп-апа изменения данных профиля
@@ -46,10 +48,9 @@ function submitChangePersonalInfoForm(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     userName.textContent = nameInput.value;
     userProfession.textContent = professionInput.value;
-    submitBtn.forEach((btn) => {
-        btn.classList.add('form__submit-button_type_inactive');
-    });
     closePopup(changePersonalInfoPopUp);
+    changePersonalInfoPopUpSubmitBtn.classList.add('form__submit-button_type_inactive');
+    changePersonalInfoPopUpSubmitBtn.setAttribute('disabled', 'disabled');
 }
 
 /**
@@ -61,9 +62,8 @@ function submitAddNewLocationForm(evt) {
     renderCard(createCard(place.value, url.value), 'prepend');
     closePopup(addNewPlacePopUp);
     document.querySelector('.elements__no-items').style.display = 'none';
-    submitBtn.forEach((btn) => {
-        btn.classList.add('form__submit-button_type_inactive');
-    });
+    addNewPlacePopUpSubmitBtn.classList.add('form__submit-button_type_inactive');
+    addNewPlacePopUpSubmitBtn.setAttribute('disabled', 'disabled');
 }
 
 /**
@@ -114,38 +114,19 @@ popUpWithImageCloseBtn.addEventListener('click', function () {
 /**
  * Отмена всплытия события клика на оверлей в области непосредственно поп-апа
  */
-popupContainer.forEach((container) => {
-    container.addEventListener('click', (evt => { evt.stopPropagation(); }));
+popupContainers.forEach((container) => {
+    container.addEventListener('click', (evt => {
+        evt.stopPropagation();
+    }));
 });
 
 /**
- * Закрытие поп-апа кликом на оверлей
+ * Закрытие поп-апов кликом на оверлей
  */
-changePersonalInfoPopUp.addEventListener('click', () => {
-    closePopup(changePersonalInfoPopUp);
-});
-
-/**
- * Закрытие поп-апа кликом на оверлей
- */
-addNewPlacePopUp.addEventListener('click', () => {
-    closePopup(addNewPlacePopUp);
-});
-
-/**
- * Закрытие поп-апа кликом на оверлей
- */
-popUpWithImage.addEventListener('click', () => {
-    closePopup(popUpWithImage);
-});
-
-/**
- * Закрытие поп-апа кликом на esc
- */
-document.addEventListener('keydown', (evt) => {
-    // для текущего открытого поп-апа
-    const popup = document.querySelector('.popup_opened');
-    if(evt.key === 'Escape') {
-        closePopup(popup);
-    }
+popups.forEach((popup) => {
+    popup.addEventListener('click', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            closePopup(popup)
+        }
+    });
 });
