@@ -143,6 +143,7 @@ popUpWithImage.addEventListener('click', () => {
  * Закрытие поп-апа кликом на esc
  */
 document.addEventListener('keydown', (evt) => {
+    // для текущего открытого поп-апа
     const popup = document.querySelector('.popup_opened');
     if(evt.key === 'Escape') {
         closePopup(popup);
