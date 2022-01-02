@@ -1,5 +1,6 @@
 import {openPopup, closePopup} from "./popup.js";
-import {createCard, renderCard} from "./template.js";
+import {renderCard} from "./template.js";
+import {Card} from "./Card.js";
 
 const userName = document.querySelector('.profile__info-name'); // поле с именем пользователя в хедере
 const userProfession = document.querySelector('.profile__info-description'); // поле  профессией пользователя в хедере
@@ -59,7 +60,7 @@ function submitChangePersonalInfoForm(evt) {
  */
 function submitAddNewLocationForm(evt) {
     evt.preventDefault();
-    renderCard(createCard(place.value, url.value), 'prepend');
+    renderCard(new Card(place.value, url.value, place.value, '#element-template').createCard(), 'prepend');
     closePopup(addNewPlacePopUp);
     document.querySelector('.elements__no-items').style.display = 'none';
     addNewPlacePopUpSubmitBtn.classList.add('form__submit-button_type_inactive');
