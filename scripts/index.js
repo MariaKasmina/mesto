@@ -1,6 +1,7 @@
 import {openPopup, closePopup} from "./popup.js";
-import {renderCard} from "./template.js";
+import {renderCard} from "./render.js";
 import {Card} from "./Card.js";
+import {FormValidator} from "./FormValidator.js";
 
 const userName = document.querySelector('.profile__info-name'); // поле с именем пользователя в хедере
 const userProfession = document.querySelector('.profile__info-description'); // поле  профессией пользователя в хедере
@@ -66,6 +67,28 @@ function submitAddNewLocationForm(evt) {
     addNewPlacePopUpSubmitBtn.classList.add('form__submit-button_type_inactive');
     addNewPlacePopUpSubmitBtn.setAttribute('disabled', 'disabled');
 }
+
+const changePersonalInfoFormValidity = new FormValidator({
+    formSelector: '.form',
+    inputSelector: '.form__item',
+    submitButtonSelector: '.form__submit-button',
+    inactiveButtonClass: 'form__submit-button_type_inactive',
+    inputErrorClass: 'popup__input_type_error',
+    inputActiveErrorClass: 'form__input-error_active'
+}, changePersonalInfoForm);
+
+changePersonalInfoFormValidity.enableValidation();
+
+const addNewLocationFormValidity = new FormValidator({
+    formSelector: '.form',
+    inputSelector: '.form__item',
+    submitButtonSelector: '.form__submit-button',
+    inactiveButtonClass: 'form__submit-button_type_inactive',
+    inputErrorClass: 'popup__input_type_error',
+    inputActiveErrorClass: 'form__input-error_active'
+}, addNewLocationForm);
+
+addNewLocationFormValidity.enableValidation();
 
 /**
  * Обработка события "Клик на кнопку изменить"
