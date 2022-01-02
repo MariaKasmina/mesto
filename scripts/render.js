@@ -2,7 +2,6 @@ import {initialCards} from "./data/data_for_template.js";
 import {Card} from "./Card.js";
 
 const cardContainer = document.querySelector('.elements');
-const popUpWithImage = document.querySelector('.popup_with_image');
 
 /**
  * Функция отрисовки карточек

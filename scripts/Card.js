@@ -10,10 +10,12 @@ export class Card {
         this.selector = selector;
     }
 
+    // Функция изменения состояния лайка на карточке
     _setHeartState(target) {
         target.classList.toggle('element__heart_active');
     }
 
+    // Функция открытия поп-апа с карточкой
     _openImagePopUp() {
         const image = this._popUpWithImage.querySelector('.popup__image');
         image.src = this.url;
@@ -23,16 +25,20 @@ export class Card {
         openPopup(this._popUpWithImage);
     }
 
+    // Функция удаления карточки
     _removeCard(element){
         element.remove();
         if (document.querySelector('.element') === null) {
             this._renderNoCards();
         }
     }
+
+    // Отрисовка текста при отсутствии карточек на странице
     _renderNoCards() {
         document.querySelector('.elements__no-items').style.display = 'block';
     }
 
+    // Функция создания карточки
     createCard() {
         const cardTemplate = document.querySelector(this.selector).content;
         const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
