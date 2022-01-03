@@ -21,9 +21,9 @@ export class FormValidator {
     // Функция, отвечающая за присваивание элементам eventListeners
     _setEventListeners = () => {
         // при открытии поп-апа кнопка должна быть неактивна
-        this._toggleButtonState(this._inputList, this._buttonElement);
+        this._toggleButtonState();
         this._inputList.forEach((inputElement) => {
-            inputElement.addEventListener('input', () => this._checkInputsAndChangeButtonState(inputElement, this._buttonElement, this._inputList));
+            inputElement.addEventListener('input', () => this._checkInputsAndChangeButtonState(inputElement));
         });
     };
 
