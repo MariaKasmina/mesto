@@ -19,10 +19,24 @@ const closeAddNewPlacePopUpBtn = document.querySelector('.popup_add_new-place .p
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
 const popUpWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
 const popUpWithImageCloseBtn = popUpWithImage.querySelector('.popup__close-button'); // кнопка закрытия поп-апа с картинкой
-const changePersonalInfoPopUpSubmitBtn = changePersonalInfoPopUp.querySelector('.form__submit-button'); // кнопка отправки формы
-const addNewPlacePopUpSubmitBtn = addNewPlacePopUp.querySelector('.form__submit-button'); // кнопка отправки формы
-const popupContainers = document.querySelectorAll('.popup__container');
 const popups = document.querySelectorAll('.popup');
+
+const config = {
+    formSelector: '.form',
+    inputSelector: '.form__item',
+    submitButtonSelector: '.form__submit-button',
+    inactiveButtonClass: 'form__submit-button_type_inactive',
+    inputErrorClass: 'popup__input_type_error',
+    inputActiveErrorClass: 'form__input-error_active'
+};
+
+const changePersonalInfoFormValidity = new FormValidator(config, changePersonalInfoForm);
+
+changePersonalInfoFormValidity.enableValidation();
+
+const addNewLocationFormValidity = new FormValidator(config, addNewLocationForm);
+
+addNewLocationFormValidity.enableValidation();
 
 /**
  * Функция для действий по открытию поп-апа изменения данных профиля
@@ -37,9 +51,8 @@ function openChangePersonalInfoPopup() {
  * Функция для действий по открытию поп-апа добавления новой карточки
  */
 function openAddNewPlacePopUp() {
-    place.value = '';
-    url.value = '';
     openPopup(addNewPlacePopUp);
+    addNewLocationFormValidity.resetValidation();
 }
 
 /**
@@ -51,8 +64,10 @@ function submitChangePersonalInfoForm(evt) {
     userName.textContent = nameInput.value;
     userProfession.textContent = professionInput.value;
     closePopup(changePersonalInfoPopUp);
-    changePersonalInfoPopUpSubmitBtn.classList.add('form__submit-button_type_inactive');
-    changePersonalInfoPopUpSubmitBtn.setAttribute('disabled', 'disabled');
+}
+
+function createCard(){
+    return new Card(place.value, url.value, place.value, '#element-template').createCard();
 }
 
 /**
@@ -61,34 +76,10 @@ function submitChangePersonalInfoForm(evt) {
  */
 function submitAddNewLocationForm(evt) {
     evt.preventDefault();
-    renderCard(new Card(place.value, url.value, place.value, '#element-template').createCard(), 'prepend');
+    renderCard(createCard(), 'prepend');
     closePopup(addNewPlacePopUp);
     document.querySelector('.elements__no-items').style.display = 'none';
-    addNewPlacePopUpSubmitBtn.classList.add('form__submit-button_type_inactive');
-    addNewPlacePopUpSubmitBtn.setAttribute('disabled', 'disabled');
 }
-
-const changePersonalInfoFormValidity = new FormValidator({
-    formSelector: '.form',
-    inputSelector: '.form__item',
-    submitButtonSelector: '.form__submit-button',
-    inactiveButtonClass: 'form__submit-button_type_inactive',
-    inputErrorClass: 'popup__input_type_error',
-    inputActiveErrorClass: 'form__input-error_active'
-}, changePersonalInfoForm);
-
-changePersonalInfoFormValidity.enableValidation();
-
-const addNewLocationFormValidity = new FormValidator({
-    formSelector: '.form',
-    inputSelector: '.form__item',
-    submitButtonSelector: '.form__submit-button',
-    inactiveButtonClass: 'form__submit-button_type_inactive',
-    inputErrorClass: 'popup__input_type_error',
-    inputActiveErrorClass: 'form__input-error_active'
-}, addNewLocationForm);
-
-addNewLocationFormValidity.enableValidation();
 
 /**
  * Обработка события "Клик на кнопку изменить"
@@ -133,15 +124,6 @@ addNewLocationForm.addEventListener('submit', (evt) => submitAddNewLocationForm(
  */
 popUpWithImageCloseBtn.addEventListener('click', function () {
     closePopup(popUpWithImage);
-});
-
-/**
- * Отмена всплытия события клика на оверлей в области непосредственно поп-апа
- */
-popupContainers.forEach((container) => {
-    container.addEventListener('click', (evt => {
-        evt.stopPropagation();
-    }));
 });
 
 /**
