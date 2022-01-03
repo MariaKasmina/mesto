@@ -21,7 +21,7 @@ export function renderCard(card, placingMethod = 'append') {
     }
 }
 
-function createCard(card){
+export function createCard(card){
     return new Card(card.name, card.link, card.desc, '#element-template').createCard();
 }
 
