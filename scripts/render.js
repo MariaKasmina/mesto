@@ -21,9 +21,13 @@ export function renderCard(card, placingMethod = 'append') {
     }
 }
 
+function createCard(card){
+    return new Card(card.name, card.link, card.desc, '#element-template').createCard();
+}
+
 /**
  * Вывод на экран исходных карточек
  */
 initialCards.map((card) => {
-    renderCard(new Card(card.name, card.link, card.desc, '#element-template').createCard(), 'append');
+    renderCard(createCard(card), 'append');
 });
