@@ -1,8 +1,8 @@
-import {openPopup, closePopup} from "./popup.js";
+import {openPopup, closePopup} from "./popupw.js";
 import {renderCard} from "./render.js";
-import {Card} from "./Card.js";
 import {FormValidator} from "./FormValidator.js";
 import {createCard} from "./render.js"
+import Popup from "./Popup.js";
 
 const userName = document.querySelector('.profile__info-name'); // поле с именем пользователя в хедере
 const userProfession = document.querySelector('.profile__info-description'); // поле  профессией пользователя в хедере
@@ -39,20 +39,25 @@ const addNewLocationFormValidity = new FormValidator(config, addNewLocationForm)
 
 addNewLocationFormValidity.enableValidation();
 
+const changePersonalInfoPopup = new Popup(changePersonalInfoPopUp);
+changePersonalInfoPopup.setEventListeners();
+const addNewLocationPopup = new Popup(addNewPlacePopUp);
+addNewLocationPopup.setEventListeners();
+
 /**
  * Функция для действий по открытию поп-апа изменения данных профиля
  */
 function openChangePersonalInfoPopup() {
     nameInput.value = userName.textContent;
     professionInput.value = userProfession.textContent;
-    openPopup(changePersonalInfoPopUp);
+    changePersonalInfoPopup.open();
 }
 
 /**
  * Функция для действий по открытию поп-апа добавления новой карточки
  */
 function openAddNewPlacePopUp() {
-    openPopup(addNewPlacePopUp);
+    addNewLocationPopup.open();
     addNewLocationFormValidity.resetValidation();
 }
 
@@ -64,7 +69,7 @@ function submitChangePersonalInfoForm(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     userName.textContent = nameInput.value;
     userProfession.textContent = professionInput.value;
-    closePopup(changePersonalInfoPopUp);
+    changePersonalInfoPopup.close();
 }
 
 /**
@@ -75,7 +80,7 @@ function submitAddNewLocationForm(evt) {
     evt.preventDefault();
     const info = {name: place.value, link: url.value, desc : place.value};
     renderCard(createCard(info), 'prepend');
-    closePopup(addNewPlacePopUp);
+    addNewLocationPopup.close();
     document.querySelector('.elements__no-items').style.display = 'none';
     place.value = '';
     url.value = '';
@@ -96,20 +101,6 @@ addNewLocationBtn.addEventListener('click', () => {
 });
 
 /**
- * Обработка события "Клик на кнопку закрытия поп-апа изменения данных о пользователе"
- */
-closeChangePersonalInfoPopUpBtn.addEventListener('click', () => {
-    closePopup(changePersonalInfoPopUp);
-});
-
-/**
- * Обработка события "Клик на кнопку закрытия поп-апа добавления новой карточки"
- */
-closeAddNewPlacePopUpBtn.addEventListener('click', () => {
-    closePopup(addNewPlacePopUp);
-});
-
-/**
  * Обработка события "Отправка формы изменения данных пользователя"
  */
 changePersonalInfoForm.addEventListener('submit', (evt) => submitChangePersonalInfoForm(evt));
@@ -124,15 +115,4 @@ addNewLocationForm.addEventListener('submit', (evt) => submitAddNewLocationForm(
  */
 popUpWithImageCloseBtn.addEventListener('click', function () {
     closePopup(popUpWithImage);
-});
-
-/**
- * Закрытие поп-апов кликом на оверлей
- */
-popups.forEach((popup) => {
-    popup.addEventListener('click', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
-            closePopup(popup);
-        }
-    });
 });
