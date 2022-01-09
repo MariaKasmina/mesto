@@ -1,7 +1,10 @@
 import {initialCards} from "./data/data_for_template.js";
 import {Card} from "./Card.js";
+import PopupWithImage from "./PopupWithImage.js";
 
 const cardContainer = document.querySelector('.elements');
+const popUpWithImage = document.querySelector('.popup_with_image');
+const popup = new PopupWithImage(popUpWithImage);
 
 /**
  * Функция отрисовки карточек
@@ -21,8 +24,12 @@ export function renderCard(card, placingMethod = 'append') {
     }
 }
 
+function handleOpenPopup(data){
+    popup.open(data);
+}
+
 export function createCard(card){
-    return new Card(card.name, card.link, card.desc, '#element-template').createCard();
+    return new Card(card.name, card.link, card.desc, '#element-template', handleOpenPopup).createCard();
 }
 
 /**

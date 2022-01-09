@@ -3,6 +3,7 @@ import {renderCard} from "./render.js";
 import {FormValidator} from "./FormValidator.js";
 import {createCard} from "./render.js"
 import Popup from "./Popup.js";
+import PopupWithImage from "./PopupWithImage.js";
 
 const userName = document.querySelector('.profile__info-name'); // поле с именем пользователя в хедере
 const userProfession = document.querySelector('.profile__info-description'); // поле  профессией пользователя в хедере
@@ -18,8 +19,8 @@ const url = addNewLocationForm.querySelector('#imageUrl'); // поле для в
 const closeChangePersonalInfoPopUpBtn = document.querySelector('.popup_change_personal-info .popup__close-button');
 const closeAddNewPlacePopUpBtn = document.querySelector('.popup_add_new-place .popup__close-button');
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
-const popUpWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
-const popUpWithImageCloseBtn = popUpWithImage.querySelector('.popup__close-button'); // кнопка закрытия поп-апа с картинкой
+const popUpWithImg = document.querySelector('.popup_with_image'); // поп-ап с картинкой
+const popUpWithImageCloseBtn = popUpWithImg.querySelector('.popup__close-button'); // кнопка закрытия поп-апа с картинкой
 const popups = document.querySelectorAll('.popup');
 
 const config = {
@@ -43,6 +44,9 @@ const changePersonalInfoPopup = new Popup(changePersonalInfoPopUp);
 changePersonalInfoPopup.setEventListeners();
 const addNewLocationPopup = new Popup(addNewPlacePopUp);
 addNewLocationPopup.setEventListeners();
+
+const popupWithImage =new PopupWithImage(popUpWithImg);
+popupWithImage.setEventListeners();
 
 /**
  * Функция для действий по открытию поп-апа изменения данных профиля
@@ -114,5 +118,5 @@ addNewLocationForm.addEventListener('submit', (evt) => submitAddNewLocationForm(
  * Обработка события "Клик на кнопку закрытия поп-апа с картинкой"
  */
 popUpWithImageCloseBtn.addEventListener('click', function () {
-    closePopup(popUpWithImage);
+    popupWithImage.close();
 });
