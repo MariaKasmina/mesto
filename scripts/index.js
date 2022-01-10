@@ -3,6 +3,7 @@ import {FormValidator} from "./FormValidator.js";
 import {createCard} from "./render.js"
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 
 const userName = document.querySelector('.profile__info-name'); // поле с именем пользователя в хедере
 const userProfession = document.querySelector('.profile__info-description'); // поле  профессией пользователя в хедере
@@ -38,11 +39,12 @@ addNewLocationFormValidity.enableValidation();
 const popupWithImage =new PopupWithImage(popUpWithImg);
 popupWithImage.setEventListeners();
 
+const userInfo = new UserInfo('.profile__info-name', '.profile__info-description');
+
 const changePersonalInfoPopupForm = new PopupWithForm(changePersonalInfoPopUp, (evt) => {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     const data = changePersonalInfoPopupForm._getInputValue();
-    userName.textContent = data[nameInput.name];
-    userProfession.textContent = data[professionInput.value];
+    userInfo.setUserInfo(data[nameInput.name], data[professionInput.name]);
     changePersonalInfoPopupForm.close();
 });
 changePersonalInfoPopupForm.setEventListeners();
@@ -60,8 +62,8 @@ addNewLocationPopupForm.setEventListeners();
  * Функция для действий по открытию поп-апа изменения данных профиля
  */
 function openChangePersonalInfoPopup() {
-    nameInput.value = userName.textContent;
-    professionInput.value = userProfession.textContent;
+    nameInput.value = userInfo.getUserInfo().name;
+    professionInput.value = userInfo.getUserInfo().profession;
     changePersonalInfoPopupForm.open();
 }
 
@@ -77,7 +79,7 @@ function openAddNewPlacePopUp() {
  * Обработка события "Клик на кнопку изменить"
  */
 editBtn.addEventListener('click', () => {
-    openChangePersonalInfoPopup(changePersonalInfoPopUp);
+    openChangePersonalInfoPopup();
 });
 
 /**
