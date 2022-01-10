@@ -1,12 +1,11 @@
-import {renderCard} from "./render.js";
 import {FormValidator} from "./FormValidator.js";
-import {createCard} from "./render.js"
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForm from "./PopupWithForm.js";
 import UserInfo from "./UserInfo.js";
+import Section from "./Section.js";
+import {initialCards} from "./data/data_for_template.js";
+import {Card} from "./Card.js";
 
-const userName = document.querySelector('.profile__info-name'); // поле с именем пользователя в хедере
-const userProfession = document.querySelector('.profile__info-description'); // поле  профессией пользователя в хедере
 const editBtn = document.querySelector('.profile__edit-button'); // кнопка Изменить в хедере
 const changePersonalInfoPopUp = document.querySelector('.popup_change_personal-info'); // поп-ап изменения данных профиля
 const addNewPlacePopUp = document.querySelector('.popup_add_new-place'); // поп-ап добавления карточки
@@ -18,6 +17,7 @@ const place = addNewLocationForm.querySelector('#place'); // поле для в�
 const url = addNewLocationForm.querySelector('#imageUrl'); // поле для ввода ссылки на картинку
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
 const popUpWithImg = document.querySelector('.popup_with_image'); // поп-ап с картинкой
+const cardContainer = document.querySelector('.elements');
 
 const config = {
     formSelector: '.form',
@@ -36,7 +36,7 @@ const addNewLocationFormValidity = new FormValidator(config, addNewLocationForm)
 
 addNewLocationFormValidity.enableValidation();
 
-const popupWithImage =new PopupWithImage(popUpWithImg);
+const popupWithImage = new PopupWithImage(popUpWithImg);
 popupWithImage.setEventListeners();
 
 const userInfo = new UserInfo('.profile__info-name', '.profile__info-description');
@@ -52,7 +52,13 @@ changePersonalInfoPopupForm.setEventListeners();
 const addNewLocationPopupForm = new PopupWithForm(addNewPlacePopUp, (evt) => {
     evt.preventDefault();
     const data = addNewLocationPopupForm._getInputValue();
-    renderCard(createCard({name: data[place.name], link: data[url.name], desc: data[place.name]}), 'prepend');
+    const cards = new Section({
+        items: [data], renderer: () => {
+            const item = new Card(data[place.name], data[url.name], data[place.name], '#element-template', handleOpenPopup).createCard();
+            cardsList.addItem(item);
+        },
+    }, '.elements','prepend');
+    cards.renderItems();
     addNewLocationPopupForm.close();
     document.querySelector('.elements__no-items').style.display = 'none';
 });
@@ -88,3 +94,19 @@ editBtn.addEventListener('click', () => {
 addNewLocationBtn.addEventListener('click', () => {
     openAddNewPlacePopUp();
 });
+
+function handleOpenPopup(data) {
+    popupWithImage.open(data);
+}
+
+const cardsList = new Section({
+        items: initialCards,
+        renderer: (cardItem) => {
+            const card = new Card(cardItem.name, cardItem.link, cardItem.desc, '#element-template', handleOpenPopup).createCard();
+            cardsList.addItem(card);
+        }
+    },
+    '.elements', 'append'
+);
+
+cardsList.renderItems();
