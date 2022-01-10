@@ -1,31 +1,17 @@
-import {openPopup} from "./popupw.js";
-
-const popUpWithImage = document.querySelector('.popup_with_image');
-
 export class Card {
-    constructor(title, url, desc, selector, func) {
+    constructor(title, url, desc, selector, handleOpenPopup) {
         this._title = title;
         this._url = url;
         this._description = desc;
         this._selector = selector;
         this._cardElement = document.querySelector(this._selector).content.querySelector('.element').cloneNode(true);
         this._cardImage = this._cardElement.querySelector('.element__image');
-        this._func = func;
+        this._handleOpenPopup = handleOpenPopup;
     }
 
     // Функция изменения состояния лайка на карточке
     _setHeartState(target) {
         target.classList.toggle('element__heart_active');
-    }
-
-    // Функция открытия поп-апа с карточкой
-    _openImagePopUp() {
-        const image = popUpWithImage.querySelector('.popup__image');
-        image.src = this._url;
-        image.alt = this._description;
-        const desc = popUpWithImage.querySelector('.popup__image-description');
-        desc.textContent = this._title;
-        openPopup(popUpWithImage);
     }
 
     // Функция удаления карточки
@@ -43,7 +29,7 @@ export class Card {
 
     _setEventListeners(){
         this._cardElement.querySelector('.element__heart').addEventListener('click', (evt => this._setHeartState(evt.target)));
-        this._cardImage.addEventListener('click', () => {this._func({name: this._title, link: this._url, description: this._description})});
+        this._cardImage.addEventListener('click', () => {this._handleOpenPopup({name: this._title, link: this._url, description: this._description})});
         this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => this._removeCard(this._cardElement));
     }
 
