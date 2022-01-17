@@ -6,12 +6,14 @@ export default class Section {
         this._placingMethod = placingMethod;
     }
 
+    // Функция отрисовки карточек
     renderItems() {
         this._initialArray.forEach((item) => {
             this._renderer(item);
         });
     }
 
+    // Функция добавления карточки
     addItem(element) {
         switch (this._placingMethod) {
             case 'append':

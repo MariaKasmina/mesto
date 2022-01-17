@@ -17,7 +17,6 @@ const place = addNewLocationForm.querySelector('#place'); // поле для в�
 const url = addNewLocationForm.querySelector('#imageUrl'); // поле для ввода ссылки на картинку
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
 const popUpWithImg = document.querySelector('.popup_with_image'); // поп-ап с картинкой
-const cardContainer = document.querySelector('.elements');
 
 const config = {
     formSelector: '.form',
@@ -64,6 +63,18 @@ const addNewLocationPopupForm = new PopupWithForm(addNewPlacePopUp, (evt) => {
 });
 addNewLocationPopupForm.setEventListeners();
 
+const cardsList = new Section({
+        items: initialCards,
+        renderer: (cardItem) => {
+            const card = new Card(cardItem.name, cardItem.link, cardItem.desc, '#element-template', handleOpenPopup).createCard();
+            cardsList.addItem(card);
+        }
+    },
+    '.elements', 'append'
+);
+
+cardsList.renderItems();
+
 /**
  * Функция для действий по открытию поп-апа изменения данных профиля
  */
@@ -98,15 +109,3 @@ addNewLocationBtn.addEventListener('click', () => {
 function handleOpenPopup(data) {
     popupWithImage.open(data);
 }
-
-const cardsList = new Section({
-        items: initialCards,
-        renderer: (cardItem) => {
-            const card = new Card(cardItem.name, cardItem.link, cardItem.desc, '#element-template', handleOpenPopup).createCard();
-            cardsList.addItem(card);
-        }
-    },
-    '.elements', 'append'
-);
-
-cardsList.renderItems();

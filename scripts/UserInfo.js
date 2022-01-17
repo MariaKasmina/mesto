@@ -4,6 +4,7 @@ export default class UserInfo {
         this._note = document.querySelector(noteAboutUserSelector);
     }
 
+    // Получение информации профиля
     getUserInfo(){
         let data = {};
         data.name = this._name.textContent;
@@ -11,6 +12,7 @@ export default class UserInfo {
         return data;
     }
 
+    // Установка данных профиля
     setUserInfo(newName, newNote){
         this._name.textContent = newName;
         this._note.textContent = newNote;
