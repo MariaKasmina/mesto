@@ -1,10 +1,11 @@
-import {FormValidator} from "./FormValidator.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
-import Section from "./Section.js";
-import {initialCards} from "./data/data_for_template.js";
-import {Card} from "./Card.js";
+import {FormValidator} from "../scripts/FormValidator.js";
+import PopupWithImage from "../scripts/PopupWithImage.js";
+import PopupWithForm from "../scripts/PopupWithForm.js";
+import UserInfo from "../scripts/UserInfo.js";
+import Section from "../scripts/Section.js";
+import {initialCards} from "../scripts/data/data_for_template.js";
+import {Card} from "../scripts/Card.js";
+import './index.css';
 
 const editBtn = document.querySelector('.profile__edit-button'); // кнопка Изменить в хедере
 const changePersonalInfoPopUp = document.querySelector('.popup_change_personal-info'); // поп-ап изменения данных профиля
@@ -16,7 +17,7 @@ const professionInput = document.querySelector('#additionalInfo'); // поле �
 const place = addNewLocationForm.querySelector('#place'); // поле для ввода названия карточки
 const url = addNewLocationForm.querySelector('#imageUrl'); // поле для ввода ссылки на картинку
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
-const popUpWithImg = document.querySelector('.popup_with_image'); // поп-ап с картинкой
+const popupWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
 
 const config = {
     formSelector: '.form',
@@ -35,8 +36,8 @@ const addNewLocationFormValidity = new FormValidator(config, addNewLocationForm)
 
 addNewLocationFormValidity.enableValidation();
 
-const popupWithImage = new PopupWithImage(popUpWithImg);
-popupWithImage.setEventListeners();
+const popupWithImageItem = new PopupWithImage(popupWithImage);
+popupWithImageItem.setEventListeners();
 
 const userInfo = new UserInfo('.profile__info-name', '.profile__info-description');
 
