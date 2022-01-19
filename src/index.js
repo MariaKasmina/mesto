@@ -108,5 +108,5 @@ addNewLocationBtn.addEventListener('click', () => {
 });
 
 function handleOpenPopup(data) {
-    popupWithImage.open(data);
+    popupWithImageItem.open(data);
 }
