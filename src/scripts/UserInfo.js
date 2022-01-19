@@ -6,7 +6,7 @@ export default class UserInfo {
 
     // Получение информации профиля
     getUserInfo(){
-        let data = {};
+        const data = {};
         data.name = this._name.textContent;
         data.profession = this._note.textContent;
         return data;
