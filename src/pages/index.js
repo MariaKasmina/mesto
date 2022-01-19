@@ -3,7 +3,7 @@ import PopupWithImage from "../scripts/PopupWithImage.js";
 import PopupWithForm from "../scripts/PopupWithForm.js";
 import UserInfo from "../scripts/UserInfo.js";
 import Section from "../scripts/Section.js";
-import {initialCards} from "../scripts/data/data_for_template.js";
+import {initialCards} from "../data/data_for_template.js";
 import {Card} from "../scripts/Card.js";
 import './index.css';
 
@@ -18,6 +18,7 @@ const place = addNewLocationForm.querySelector('#place'); // поле для в�
 const url = addNewLocationForm.querySelector('#imageUrl'); // поле для ввода ссылки на картинку
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
 const popupWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
+const noItemsBlock = document.querySelector('.elements__no-items');
 
 const config = {
     formSelector: '.form',
@@ -43,7 +44,7 @@ const userInfo = new UserInfo('.profile__info-name', '.profile__info-description
 
 const changePersonalInfoPopupForm = new PopupWithForm(changePersonalInfoPopUp, (evt) => {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    const data = changePersonalInfoPopupForm._getInputValue();
+    const data = changePersonalInfoPopupForm.getInputValue();
     userInfo.setUserInfo(data[nameInput.name], data[professionInput.name]);
     changePersonalInfoPopupForm.close();
 });
@@ -51,30 +52,29 @@ changePersonalInfoPopupForm.setEventListeners();
 
 const addNewLocationPopupForm = new PopupWithForm(addNewPlacePopUp, (evt) => {
     evt.preventDefault();
-    const data = addNewLocationPopupForm._getInputValue();
-    const cards = new Section({
-        items: [data], renderer: () => {
-            const item = new Card(data[place.name], data[url.name], data[place.name], '#element-template', handleOpenPopup).createCard();
-            cardsList.addItem(item);
-        },
-    }, '.elements','prepend');
-    cards.renderItems();
+    const data = addNewLocationPopupForm.getInputValue();
+    const item = createCard({name: data[place.name], link: data[url.name], desc: data[place.name]});
+    cardsList.addItem(item, 'prepend');
     addNewLocationPopupForm.close();
-    document.querySelector('.elements__no-items').style.display = 'none';
+    noItemsBlock.style.display = 'none';
 });
 addNewLocationPopupForm.setEventListeners();
 
 const cardsList = new Section({
         items: initialCards,
         renderer: (cardItem) => {
-            const card = new Card(cardItem.name, cardItem.link, cardItem.desc, '#element-template', handleOpenPopup).createCard();
-            cardsList.addItem(card);
+            const card = createCard(cardItem);
+            cardsList.addItem(card, 'append');
         }
     },
-    '.elements', 'append'
+    '.elements'
 );
 
 cardsList.renderItems();
+
+function createCard(card){
+    return new Card(card.name, card.link, card.desc, '#element-template', handleOpenPopup).createCard();
+}
 
 /**
  * Функция для действий по открытию поп-апа изменения данных профиля

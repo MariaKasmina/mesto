@@ -1,9 +1,8 @@
 export default class Section {
-    constructor({items, renderer}, containerSelector, placingMethod='append') {
+    constructor({items, renderer}, containerSelector) {
         this._initialArray = items;
         this._container = document.querySelector(containerSelector);
         this._renderer = renderer;
-        this._placingMethod = placingMethod;
     }
 
     // Функция отрисовки карточек
@@ -14,8 +13,8 @@ export default class Section {
     }
 
     // Функция добавления карточки
-    addItem(element) {
-        switch (this._placingMethod) {
+    addItem(element, placingMethod) {
+        switch (placingMethod) {
             case 'append':
                 this._container.append(element);
                 break;
