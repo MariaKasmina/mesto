@@ -46,7 +46,9 @@ const userInfo = new UserInfo('.profile__info-name', '.profile__info-description
 const changePersonalInfoPopupForm = new PopupWithForm(changePersonalInfoPopUp, (evt) => {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     const data = changePersonalInfoPopupForm.getInputValue();
-    userInfo.setUserInfo(data[nameInput.name], data[professionInput.name]);
+    api.updateUserInfo(data[nameInput.name], data[professionInput.name]).then((res) => {
+        userInfo.setUserInfo(res.name, res.about); // после изменения данных подтягиваем их на страницу
+    });
     changePersonalInfoPopupForm.close();
 });
 changePersonalInfoPopupForm.setEventListeners();
@@ -80,10 +82,14 @@ const api = new Api({
     }
 })
 
-api.getUserInfo().then((res) => {
-    userInfo.setUserInfo(res.name, res.about);
-    document.querySelector('img.profile__image').setAttribute('src', res.avatar);
-})
+function setUserInfo(){
+    api.getUserInfo().then((res) => {
+        userInfo.setUserInfo(res.name, res.about);
+        document.querySelector('img.profile__image').setAttribute('src', res.avatar);
+    })
+}
+
+setUserInfo();
 
 function createCard(card){
     return new Card(card.name, card.link, card.desc, '#element-template', handleOpenPopup).createCard();
@@ -93,12 +99,8 @@ function createCard(card){
  * Функция для действий по открытию поп-апа изменения данных профиля
  */
 function openChangePersonalInfoPopup() {
-    api.getUserInfo().then((res) => {
-        nameInput.value = res.name;
-        professionInput.value = res.about;
-    });
-    // nameInput.value = userInfo.getUserInfo().name;
-    // professionInput.value = userInfo.getUserInfo().profession;
+    nameInput.value = userInfo.getUserInfo().name;
+    professionInput.value = userInfo.getUserInfo().profession;
     changePersonalInfoPopupForm.open();
 }
 

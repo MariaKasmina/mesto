@@ -17,4 +17,22 @@ export default class Api {
             return {name: res.name, about: res.about, avatar: res.avatar}
         }).catch((err) => console.log(err));
     }
+
+    updateUserInfo(newName, newNote){
+        return fetch(this._baseUrl, {
+            method: 'PATCH',
+            headers: {
+                authorization: `${this._token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: newName,
+                about: newNote
+            })
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else return Promise.reject(res.status);
+        }).then((res) => {return {name: res.name, about: res.about}}).catch((err) => console.log(err));
+    }
 }
