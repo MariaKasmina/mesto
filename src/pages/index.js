@@ -6,6 +6,7 @@ import Section from "../scripts/Section.js";
 import {initialCards} from "../data/data_for_template.js";
 import {Card} from "../scripts/Card.js";
 import './index.css';
+import Api from "../scripts/Api.js";
 
 const editBtn = document.querySelector('.profile__edit-button'); // кнопка Изменить в хедере
 const changePersonalInfoPopUp = document.querySelector('.popup_change_personal-info'); // поп-ап изменения данных профиля
@@ -72,6 +73,18 @@ const cardsList = new Section({
 
 cardsList.renderItems();
 
+const api = new Api({
+    baseUrl: 'https://nomoreparties.co/v1/cohort-34/users/me',
+    headers: {
+        authorization: '6a51e53e-46b7-4c82-b7df-ab43a73f6f4d'
+    }
+})
+
+api.getUserInfo().then((res) => {
+    userInfo.setUserInfo(res.name, res.about);
+    document.querySelector('img.profile__image').setAttribute('src', res.avatar);
+})
+
 function createCard(card){
     return new Card(card.name, card.link, card.desc, '#element-template', handleOpenPopup).createCard();
 }
@@ -80,8 +93,12 @@ function createCard(card){
  * Функция для действий по открытию поп-апа изменения данных профиля
  */
 function openChangePersonalInfoPopup() {
-    nameInput.value = userInfo.getUserInfo().name;
-    professionInput.value = userInfo.getUserInfo().profession;
+    api.getUserInfo().then((res) => {
+        nameInput.value = res.name;
+        professionInput.value = res.about;
+    });
+    // nameInput.value = userInfo.getUserInfo().name;
+    // professionInput.value = userInfo.getUserInfo().profession;
     changePersonalInfoPopupForm.open();
 }
 
