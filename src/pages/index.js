@@ -63,18 +63,6 @@ const addNewLocationPopupForm = new PopupWithForm(addNewPlacePopUp, (evt) => {
 });
 addNewLocationPopupForm.setEventListeners();
 
-const cardsList = new Section({
-        items: initialCards,
-        renderer: (cardItem) => {
-            const card = createCard(cardItem);
-            cardsList.addItem(card, 'append');
-        }
-    },
-    '.elements'
-);
-
-cardsList.renderItems();
-
 const api = new Api({
     baseUrl: 'https://nomoreparties.co/v1/cohort-34/users/me',
     headers: {
@@ -91,8 +79,29 @@ function setUserInfo(){
 
 setUserInfo();
 
+const cardApi = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34/cards',
+    headers: {
+        authorization: '6a51e53e-46b7-4c82-b7df-ab43a73f6f4d'
+    }
+});
+
+
+cardApi.getInitialCards().then((res) => {
+    const cardsList = new Section({
+            items: res[0],
+            renderer: (cardItem) => {
+                const card = createCard(cardItem);
+                cardsList.addItem(card, 'append');
+            }
+        },
+        '.elements'
+    );
+    cardsList.renderItems();
+})
+
 function createCard(card){
-    return new Card(card.name, card.link, card.desc, '#element-template', handleOpenPopup).createCard();
+    return new Card(card.name, card.link, 'Место', '#element-template', handleOpenPopup).createCard();
 }
 
 /**
