@@ -35,4 +35,18 @@ export default class Api {
             } else return Promise.reject(res.status);
         }).then((res) => {return {name: res.name, about: res.about}}).catch((err) => console.log(err));
     }
+
+    getInitialCards(){
+        return fetch(this._baseUrl, {
+            method: 'GET',
+            headers: {
+                authorization: `${this._token}`,
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else return Promise.reject(res.status);
+        }).then((res) => {return [res];}).catch((err) => console.log(err));
+    }
 }
