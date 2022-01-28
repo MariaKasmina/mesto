@@ -104,7 +104,9 @@ const container = cardApi.getInitialCards().then((res) => {
 })
 
 function createCard(card){
-    return new Card(card.name, card.link, 'Место', '#element-template', handleOpenPopup).createCard();
+    console.log(card.name)
+    console.log(card.likes.length)
+    return new Card(card.name, card.link, 'Место', card.likes.length, '#element-template', handleOpenPopup).createCard();
 }
 
 /**
