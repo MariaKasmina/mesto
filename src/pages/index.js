@@ -56,8 +56,10 @@ changePersonalInfoPopupForm.setEventListeners();
 const addNewLocationPopupForm = new PopupWithForm(addNewPlacePopUp, (evt) => {
     evt.preventDefault();
     const data = addNewLocationPopupForm.getInputValue();
-    const item = createCard({name: data[place.name], link: data[url.name], desc: data[place.name]});
-    container.then((container) => container.addItem(item, 'prepend'));
+    cardApi.putNewImage(data[place.name], data[url.name]).then((res) => {
+        const item = createCard({name: res.name, link: res.link, desc: 'Место'});
+        container.then((container) => container.addItem(item, 'prepend'));
+    });
     addNewLocationPopupForm.close();
     noItemsBlock.style.display = 'none';
 });

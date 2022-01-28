@@ -49,4 +49,22 @@ export default class Api {
             } else return Promise.reject(res.status);
         }).then((res) => {return [res];}).catch((err) => console.log(err));
     }
+
+    putNewImage(imageName, imageLink){
+        return fetch(this._baseUrl, {
+            method: 'POST',
+            headers: {
+                authorization: `${this._token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: imageName,
+                link: imageLink
+            })
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else return Promise.reject(res.status);
+        }).then((res) => {return res;}).catch((err) => console.log(err));
+    }
 }
