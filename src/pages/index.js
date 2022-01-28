@@ -57,7 +57,7 @@ const addNewLocationPopupForm = new PopupWithForm(addNewPlacePopUp, (evt) => {
     evt.preventDefault();
     const data = addNewLocationPopupForm.getInputValue();
     const item = createCard({name: data[place.name], link: data[url.name], desc: data[place.name]});
-    cardsList.addItem(item, 'prepend');
+    container.then((container) => container.addItem(item, 'prepend'));
     addNewLocationPopupForm.close();
     noItemsBlock.style.display = 'none';
 });
@@ -87,7 +87,7 @@ const cardApi = new Api({
 });
 
 
-cardApi.getInitialCards().then((res) => {
+const container = cardApi.getInitialCards().then((res) => {
     const cardsList = new Section({
             items: res[0],
             renderer: (cardItem) => {
@@ -98,6 +98,7 @@ cardApi.getInitialCards().then((res) => {
         '.elements'
     );
     cardsList.renderItems();
+    return cardsList;
 })
 
 function createCard(card){
