@@ -2,9 +2,6 @@
   height: 19px;
   width: 27px;
   align-self: flex-end;
-  margin-top: 5px;
-  margin-right: 5px;
-  margin-bottom: 5px;
   cursor: pointer;
   transition: opacity 1s linear;
   background-image: url("../../../images/heart.svg");
