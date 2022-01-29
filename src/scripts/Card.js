@@ -41,7 +41,7 @@ export class Card {
         this._cardElement.querySelector('.element__caption-text').textContent = this._title;
         this._cardImage.src = this._url;
         this._cardImage.alt = this._description;
-        this._cardElement.querySelector('.element__heart-count').textContent = this._likes;
+        if(this._likes !== undefined) this._cardElement.querySelector('.element__heart-count').textContent = this._likes;
         this._setEventListeners();
 
         return this._cardElement;

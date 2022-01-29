@@ -20,7 +20,7 @@ const url = addNewLocationForm.querySelector('#imageUrl'); // поле для в
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
 const popupWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
 const noItemsBlock = document.querySelector('.elements__no-items');
-const popupAreYouSure  = document.querySelector('.popup_are_you-sure');
+const popupAreYouSure = document.querySelector('.popup_are_you-sure');
 
 const config = {
     formSelector: '.form',
@@ -80,7 +80,7 @@ const api = new Api({
     }
 })
 
-function setUserInfo(){
+function setUserInfo() {
     api.getUserInfo().then((res) => {
         userInfo.setUserInfo(res.name, res.about);
         document.querySelector('img.profile__image').setAttribute('src', res.avatar);
@@ -96,6 +96,20 @@ const cardApi = new Api({
     }
 });
 
+cardApi.getCardsInfo().then((res) => {
+    api.getUserInfo().then((result) => {
+        res.map((item, index) => {
+            setTimeout(changeVisibilityOfTrashcans, 300, {id: item.owner._id, index: index, owner: result.id, visibility: 'none'});
+        })
+    });
+
+});
+
+function changeVisibilityOfTrashcans(data){
+    if (data.id !== data.owner) {
+        document.querySelectorAll('.element__delete-btn')[data.index].style.display = data.visibility;
+    }
+}
 
 const container = cardApi.getInitialCards().then((res) => {
     const cardsList = new Section({
@@ -111,7 +125,7 @@ const container = cardApi.getInitialCards().then((res) => {
     return cardsList;
 })
 
-function createCard(card){
+function createCard(card) {
     return new Card(card.name, card.link, 'Место', card.likes.length, '#element-template', handleOpenPopup, handleOpenPopupAreYouSure).createCard();
 }
 
@@ -150,6 +164,6 @@ function handleOpenPopup(data) {
     popupWithImageItem.open(data);
 }
 
-function handleOpenPopupAreYouSure(){
+function handleOpenPopupAreYouSure() {
     areYouSurePopup.open();
 }

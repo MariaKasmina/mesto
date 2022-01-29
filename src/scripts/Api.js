@@ -14,7 +14,7 @@ export default class Api {
                 return res.json();
             } else return Promise.reject(res.status);
         }).then((res) => {
-            return {name: res.name, about: res.about, avatar: res.avatar}
+            return {name: res.name, about: res.about, avatar: res.avatar, id: res._id}
         }).catch((err) => console.log(err));
     }
 
@@ -61,6 +61,20 @@ export default class Api {
                 name: imageName,
                 link: imageLink
             })
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else return Promise.reject(res.status);
+        }).then((res) => {return res;}).catch((err) => console.log(err));
+    }
+
+    getCardsInfo(){
+        return fetch(this._baseUrl, {
+            method: 'GET',
+            headers: {
+                authorization: `${this._token}`,
+                'Content-Type': 'application/json'
+            }
         }).then((res) => {
             if (res.ok) {
                 return res.json();
