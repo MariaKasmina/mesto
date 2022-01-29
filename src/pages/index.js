@@ -20,6 +20,7 @@ const url = addNewLocationForm.querySelector('#imageUrl'); // поле для в
 const addNewLocationBtn = document.querySelector('.profile__add-button'); // кнопка с плюсом в хедере
 const popupWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
 const noItemsBlock = document.querySelector('.elements__no-items');
+const popupAreYouSure  = document.querySelector('.popup_are_you-sure');
 
 const config = {
     formSelector: '.form',
@@ -40,6 +41,13 @@ addNewLocationFormValidity.enableValidation();
 
 const popupWithImageItem = new PopupWithImage(popupWithImage);
 popupWithImageItem.setEventListeners();
+
+const areYouSurePopup = new PopupWithForm(popupAreYouSure, (evt) => {
+    evt.preventDefault();
+    // удаление карточки
+    areYouSurePopup.close();
+});
+areYouSurePopup.setEventListeners();
 
 const userInfo = new UserInfo('.profile__info-name', '.profile__info-description');
 
@@ -104,9 +112,7 @@ const container = cardApi.getInitialCards().then((res) => {
 })
 
 function createCard(card){
-    console.log(card.name)
-    console.log(card.likes.length)
-    return new Card(card.name, card.link, 'Место', card.likes.length, '#element-template', handleOpenPopup).createCard();
+    return new Card(card.name, card.link, 'Место', card.likes.length, '#element-template', handleOpenPopup, handleOpenPopupAreYouSure).createCard();
 }
 
 /**
@@ -142,4 +148,8 @@ addNewLocationBtn.addEventListener('click', () => {
 
 function handleOpenPopup(data) {
     popupWithImageItem.open(data);
+}
+
+function handleOpenPopupAreYouSure(){
+    areYouSurePopup.open();
 }

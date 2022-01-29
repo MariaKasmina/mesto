@@ -1,5 +1,5 @@
 export class Card {
-    constructor(title, url, desc, likesCount, selector, handleCardClick) {
+    constructor(title, url, desc, likesCount, selector, handleCardClick, handleDeleteBtnClick) {
         this._title = title;
         this._url = url;
         this._description = desc;
@@ -8,6 +8,7 @@ export class Card {
         this._cardElement = document.querySelector(this._selector).content.querySelector('.element').cloneNode(true);
         this._cardImage = this._cardElement.querySelector('.element__image');
         this._handleCardClick = handleCardClick;
+        this._handleDeleteBtnClick = handleDeleteBtnClick;
     }
 
     // Функция изменения состояния лайка на карточке
@@ -31,7 +32,8 @@ export class Card {
     _setEventListeners(){
         this._cardElement.querySelector('.element__heart').addEventListener('click', (evt => this._setHeartState(evt.target)));
         this._cardImage.addEventListener('click', () => {this._handleCardClick({name: this._title, link: this._url, description: this._description})});
-        this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => this._removeCard(this._cardElement));
+        this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => this._handleDeleteBtnClick());
+        // this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => this._removeCard(this._cardElement));
     }
 
     // Функция создания карточки
