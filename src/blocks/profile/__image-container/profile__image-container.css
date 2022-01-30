@@ -1,0 +1,25 @@
+.profile__image-container{
+  background-color: black;
+  opacity: 1;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  position: relative;
+  transition: opacity 1s linear;
+  cursor: pointer;
+}
+
+.profile__image-container:hover{
+  opacity: .8;
+}
+
+.profile__image-container:hover:after{
+
+  content: '';
+  height: 120px;
+  width: 120px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url("../../../../src/images/icon_change_avatar.png") no-repeat 47px, 47px;
+}
