@@ -3,7 +3,6 @@ import PopupWithImage from "../scripts/PopupWithImage.js";
 import PopupWithForm from "../scripts/PopupWithForm.js";
 import UserInfo from "../scripts/UserInfo.js";
 import Section from "../scripts/Section.js";
-import {initialCards} from "../data/data_for_template.js";
 import {Card} from "../scripts/Card.js";
 import './index.css';
 import Api from "../scripts/Api.js";
@@ -11,7 +10,7 @@ import Api from "../scripts/Api.js";
 const editBtn = document.querySelector('.profile__edit-button'); // кнопка Изменить в хедере
 const changePersonalInfoPopUp = document.querySelector('.popup_change_personal-info'); // поп-ап изменения данных профиля
 const addNewPlacePopUp = document.querySelector('.popup_add_new-place'); // поп-ап добавления карточки
-const changePersonalInfoForm = document.querySelector('.form_type_edit'); // форма изменения данных пользователя
+const changePersonalInfoForm = document.querySelector('.popup_change_personal-info .form_type_edit'); // форма изменения данных пользователя
 const addNewLocationForm = document.querySelector('.form_type_add'); // форма добавления новой карточки
 const nameInput = document.querySelector('#name'); // поле для ввода имени
 const professionInput = document.querySelector('#additionalInfo'); // поле для ввода профессии
@@ -21,6 +20,9 @@ const addNewLocationBtn = document.querySelector('.profile__add-button'); // к�
 const popupWithImage = document.querySelector('.popup_with_image'); // поп-ап с картинкой
 const noItemsBlock = document.querySelector('.elements__no-items');
 const popupAreYouSure = document.querySelector('.popup_are_you-sure');
+const changeProfileImageForm = document.querySelector('.popup_change-profile-image .form_type_edit');
+const changeProfileImagePopup = document.querySelector('.popup_change-profile-image');
+const avatar = document.querySelector('.profile__image-container');
 
 const config = {
     formSelector: '.form',
@@ -39,8 +41,32 @@ const addNewLocationFormValidity = new FormValidator(config, addNewLocationForm)
 
 addNewLocationFormValidity.enableValidation();
 
+const changeProfileImageFormValidity = new FormValidator(config, changeProfileImageForm);
+changeProfileImageFormValidity.enableValidation();
+
+const changeProfileImagePopupItem = new PopupWithForm(changeProfileImagePopup);
+changeProfileImagePopupItem.setEventListeners();
+
 const popupWithImageItem = new PopupWithImage(popupWithImage);
 popupWithImageItem.setEventListeners();
+
+/**
+ * Обработка события "Клик на кнопку изменить"
+ */
+editBtn.addEventListener('click', () => {
+    openChangePersonalInfoPopup();
+});
+
+/**
+ * Обработка события "Клик на кнопку добавления новой карточки"
+ */
+addNewLocationBtn.addEventListener('click', () => {
+    openAddNewPlacePopUp();
+});
+
+avatar.addEventListener('click', () => {
+    changeProfileImagePopupItem.open();
+})
 
 const userInfo = new UserInfo('.profile__info-name', '.profile__info-description');
 
@@ -88,15 +114,17 @@ const cardApi = new Api({
         authorization: '6a51e53e-46b7-4c82-b7df-ab43a73f6f4d'
     }
 });
-
-cardApi.getCardsInfo().then((res) => {
-    api.getUserInfo().then((result) => {
-        res.map((item, index) => {
-            setTimeout(changeVisibilityOfTrashcans, 300, {id: item.owner._id, index: index, owner: result.id, visibility: 'none'});
-        })
+function changingTrashcansVisibility(){
+    cardApi.getCardsInfo().then((res) => {
+        api.getUserInfo().then((result) => {
+            res.map((item, index) => {
+                setTimeout(changeVisibilityOfTrashcans, 300, {id: item.owner._id, index: index, owner: result.id, visibility: 'none'});
+            })
+        });
     });
+}
 
-});
+changingTrashcansVisibility();
 
 function changeVisibilityOfTrashcans(data){
     if (data.id !== data.owner) {
@@ -141,20 +169,6 @@ function openAddNewPlacePopUp() {
     addNewLocationPopupForm.open();
     addNewLocationFormValidity.resetValidation();
 }
-
-/**
- * Обработка события "Клик на кнопку изменить"
- */
-editBtn.addEventListener('click', () => {
-    openChangePersonalInfoPopup();
-});
-
-/**
- * Обработка события "Клик на кнопку добавления новой карточки"
- */
-addNewLocationBtn.addEventListener('click', () => {
-    openAddNewPlacePopUp();
-});
 
 function handleOpenPopup(data) {
     popupWithImageItem.open(data);
