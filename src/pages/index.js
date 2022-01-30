@@ -42,13 +42,6 @@ addNewLocationFormValidity.enableValidation();
 const popupWithImageItem = new PopupWithImage(popupWithImage);
 popupWithImageItem.setEventListeners();
 
-const areYouSurePopup = new PopupWithForm(popupAreYouSure, (evt) => {
-    evt.preventDefault();
-    // удаление карточки
-    areYouSurePopup.close();
-});
-areYouSurePopup.setEventListeners();
-
 const userInfo = new UserInfo('.profile__info-name', '.profile__info-description');
 
 const changePersonalInfoPopupForm = new PopupWithForm(changePersonalInfoPopUp, (evt) => {
@@ -115,6 +108,7 @@ const container = cardApi.getInitialCards().then((res) => {
     const cardsList = new Section({
             items: res[0],
             renderer: (cardItem) => {
+                console.log(cardItem)
                 const card = createCard(cardItem);
                 cardsList.addItem(card, 'append');
             }
@@ -126,7 +120,10 @@ const container = cardApi.getInitialCards().then((res) => {
 })
 
 function createCard(card) {
-    return new Card(card.name, card.link, 'Место', card.likes.length, '#element-template', handleOpenPopup, handleOpenPopupAreYouSure).createCard();
+    if(card.likes === undefined){
+        return new Card(card._id, card.name, card.link, 'Место', 0, '#element-template', handleOpenPopup, handleDeleteClick).createCard();
+    }
+    return new Card(card._id, card.name, card.link, 'Место', card.likes.length, '#element-template', handleOpenPopup, handleDeleteClick).createCard();
 }
 
 /**
@@ -164,6 +161,13 @@ function handleOpenPopup(data) {
     popupWithImageItem.open(data);
 }
 
-function handleOpenPopupAreYouSure() {
+function handleDeleteClick(id, selector) {
+    const areYouSurePopup = new PopupWithForm(popupAreYouSure, (evt) => {
+        evt.preventDefault();
+        cardApi.removeCard(id).catch((err) => console.log(`Ошибка удаления ${err}`));
+        selector.remove();
+        areYouSurePopup.close();
+    });
+    areYouSurePopup.setEventListeners();
     areYouSurePopup.open();
 }
