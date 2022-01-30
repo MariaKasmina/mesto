@@ -23,6 +23,7 @@ const popupAreYouSure = document.querySelector('.popup_are_you-sure');
 const changeProfileImageForm = document.querySelector('.popup_change-profile-image .form_type_edit');
 const changeProfileImagePopup = document.querySelector('.popup_change-profile-image');
 const avatar = document.querySelector('.profile__image-container');
+const changeAvatarInput = document.querySelector('#profileImg');
 
 const config = {
     formSelector: '.form',
@@ -44,7 +45,16 @@ addNewLocationFormValidity.enableValidation();
 const changeProfileImageFormValidity = new FormValidator(config, changeProfileImageForm);
 changeProfileImageFormValidity.enableValidation();
 
-const changeProfileImagePopupItem = new PopupWithForm(changeProfileImagePopup);
+const changeProfileImagePopupItem = new PopupWithForm(changeProfileImagePopup, (evt) => {
+    evt.preventDefault();
+    const data = changeProfileImagePopupItem.getInputValue();
+    api.changeAvatar(data[changeAvatarInput.name]).then((res) => {
+        document.querySelector('.profile__image').setAttribute('src', res.avatar);
+    }).catch((err) => {
+        console.log(`Ошибка запроса ${err}`);
+    })
+    changeProfileImagePopupItem.close();
+});
 changeProfileImagePopupItem.setEventListeners();
 
 const popupWithImageItem = new PopupWithImage(popupWithImage);
@@ -102,7 +112,7 @@ const api = new Api({
 function setUserInfo() {
     api.getUserInfo().then((res) => {
         userInfo.setUserInfo(res.name, res.about);
-        document.querySelector('img.profile__image').setAttribute('src', res.avatar);
+        document.querySelector('.profile__image').setAttribute('src', res.avatar);
     })
 }
 

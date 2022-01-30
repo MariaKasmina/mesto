@@ -123,4 +123,21 @@ export default class Api {
             } else return Promise.reject(res.status);
         }).then((res) => {return res.likes.length;}).catch((err) => console.log(err));
     }
+
+    changeAvatar(avatarUrl){
+        return fetch(`${this._baseUrl}/avatar`, {
+            method: 'PATCH',
+            headers: {
+                authorization: `${this._token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                avatar: avatarUrl,
+            })
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else return Promise.reject(res.status);
+        }).then((res) => {return res;}).catch((err) => console.log(err));
+    }
 }
