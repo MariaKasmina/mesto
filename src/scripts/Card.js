@@ -1,5 +1,5 @@
 export class Card {
-    constructor(id, title, url, desc, likesCount, selector, handleCardClick, handleDeleteBtnClick) {
+    constructor(id, title, url, desc, likesCount, selector, handleCardClick, handleDeleteBtnClick, handlePutLike, handleDeleteLike) {
         this._id = id;
         this._title = title;
         this._url = url;
@@ -10,31 +10,30 @@ export class Card {
         this._cardImage = this._cardElement.querySelector('.element__image');
         this._handleCardClick = handleCardClick;
         this._handleDeleteBtnClick = handleDeleteBtnClick;
+        this._handlePutLike = handlePutLike;
+        this._handleDeleteLike = handleDeleteLike;
     }
 
     // Функция изменения состояния лайка на карточке
     _setHeartState(target) {
-        target.classList.toggle('element__heart_active');
-    }
-
-    // Функция удаления карточки
-    _removeCard(element){
-        element.remove();
-        if (document.querySelector('.element') === null) {
-            this._renderNoCards();
+        if(!target.classList.contains('element__heart_active')){
+            this._handlePutLike(this._id).then((res) => this._recountLikes(res));
+            target.classList.toggle('element__heart_active');
+        } else {
+            this._handleDeleteLike(this._id).then((res) => this._recountLikes(res));
+            target.classList.toggle('element__heart_active');
         }
     }
 
-    // Отрисовка текста при отсутствии карточек на странице
-    _renderNoCards() {
-        document.querySelector('.elements__no-items').style.display = 'block';
+    _recountLikes(count){
+        this._likes = count;
+        this._cardElement.querySelector('.element__heart-count').textContent = this._likes;
     }
 
     _setEventListeners(){
         this._cardElement.querySelector('.element__heart').addEventListener('click', (evt => this._setHeartState(evt.target)));
         this._cardImage.addEventListener('click', () => {this._handleCardClick({name: this._title, link: this._url, description: this._description})});
         this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => this._handleDeleteBtnClick(this._id, this._cardElement));
-        // this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => this._removeCard(this._cardElement));
     }
 
     // Функция создания карточки
