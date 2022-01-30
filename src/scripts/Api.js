@@ -4,6 +4,7 @@ export default class Api {
         this._token = options.headers.authorization;
     }
 
+    // получение информации пользователя в формате name: res.name, about: res.about, avatar: res.avatar, id: res._id
     getUserInfo() {
         return fetch(this._baseUrl, {
             headers: {
@@ -18,6 +19,7 @@ export default class Api {
         }).catch((err) => console.log(err));
     }
 
+    // обновление информации пользователя
     updateUserInfo(newName, newNote){
         return fetch(this._baseUrl, {
             method: 'PATCH',
@@ -36,6 +38,7 @@ export default class Api {
         }).then((res) => {return {name: res.name, about: res.about}}).catch((err) => console.log(err));
     }
 
+    // получение начальных карточек
     getInitialCards(){
         return fetch(this._baseUrl, {
             method: 'GET',
@@ -50,6 +53,7 @@ export default class Api {
         }).then((res) => {return [res];}).catch((err) => console.log(err));
     }
 
+    // добавление новой карточки
     putNewImage(imageName, imageLink){
         return fetch(this._baseUrl, {
             method: 'POST',
@@ -68,6 +72,7 @@ export default class Api {
         }).then((res) => {return res;}).catch((err) => console.log(err));
     }
 
+    // получение данных карточек
     getCardsInfo(){
         return fetch(this._baseUrl, {
             method: 'GET',
@@ -82,6 +87,7 @@ export default class Api {
         }).then((res) => {return res;}).catch((err) => console.log(err));
     }
 
+    // удаление карточки по id
     removeCard(id){
         return fetch(`${this._baseUrl}/${id}`, {
             method: 'DELETE',
@@ -96,6 +102,7 @@ export default class Api {
         });
     }
 
+    // добавление карточке лайка по id
     addLike(id){
         return fetch(`${this._baseUrl}/${id}/likes`, {
             method: 'PUT',
@@ -110,6 +117,7 @@ export default class Api {
         }).then((res) => {return res.likes.length;}).catch((err) => console.log(err));
     }
 
+    // удаление лайка по id
     removeLike(id){
         return fetch(`${this._baseUrl}/${id}/likes`, {
             method: 'DELETE',
@@ -124,6 +132,7 @@ export default class Api {
         }).then((res) => {return res.likes.length;}).catch((err) => console.log(err));
     }
 
+    // изменение аватара
     changeAvatar(avatarUrl){
         return fetch(`${this._baseUrl}/avatar`, {
             method: 'PATCH',
