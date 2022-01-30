@@ -1,5 +1,6 @@
 export class Card {
-    constructor(title, url, desc, likesCount, selector, handleCardClick, handleDeleteBtnClick) {
+    constructor(id, title, url, desc, likesCount, selector, handleCardClick, handleDeleteBtnClick) {
+        this._id = id;
         this._title = title;
         this._url = url;
         this._description = desc;
@@ -32,7 +33,7 @@ export class Card {
     _setEventListeners(){
         this._cardElement.querySelector('.element__heart').addEventListener('click', (evt => this._setHeartState(evt.target)));
         this._cardImage.addEventListener('click', () => {this._handleCardClick({name: this._title, link: this._url, description: this._description})});
-        this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => this._handleDeleteBtnClick());
+        this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => this._handleDeleteBtnClick(this._id, this._cardElement));
         // this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => this._removeCard(this._cardElement));
     }
 
@@ -41,7 +42,7 @@ export class Card {
         this._cardElement.querySelector('.element__caption-text').textContent = this._title;
         this._cardImage.src = this._url;
         this._cardImage.alt = this._description;
-        if(this._likes !== undefined) this._cardElement.querySelector('.element__heart-count').textContent = this._likes;
+        this._cardElement.querySelector('.element__heart-count').textContent = this._likes;
         this._setEventListeners();
 
         return this._cardElement;
