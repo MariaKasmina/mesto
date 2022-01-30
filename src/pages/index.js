@@ -108,7 +108,6 @@ const container = cardApi.getInitialCards().then((res) => {
     const cardsList = new Section({
             items: res[0],
             renderer: (cardItem) => {
-                console.log(cardItem)
                 const card = createCard(cardItem);
                 cardsList.addItem(card, 'append');
             }
@@ -121,9 +120,9 @@ const container = cardApi.getInitialCards().then((res) => {
 
 function createCard(card) {
     if(card.likes === undefined){
-        return new Card(card._id, card.name, card.link, 'Место', 0, '#element-template', handleOpenPopup, handleDeleteClick).createCard();
+        return new Card(card._id, card.name, card.link, 'Место', 0, '#element-template', handleOpenPopup, handleDeleteClick, setLike, removeLike).createCard();
     }
-    return new Card(card._id, card.name, card.link, 'Место', card.likes.length, '#element-template', handleOpenPopup, handleDeleteClick).createCard();
+    return new Card(card._id, card.name, card.link, 'Место', card.likes.length, '#element-template', handleOpenPopup, handleDeleteClick, setLike, removeLike).createCard();
 }
 
 /**
@@ -166,8 +165,27 @@ function handleDeleteClick(id, selector) {
         evt.preventDefault();
         cardApi.removeCard(id).catch((err) => console.log(`Ошибка удаления ${err}`));
         selector.remove();
+        if (document.querySelector('.element') === null) {
+            document.querySelector('.elements__no-items').style.display = 'block';
+        }
         areYouSurePopup.close();
     });
     areYouSurePopup.setEventListeners();
     areYouSurePopup.open();
+}
+
+function setLike(id){
+    return cardApi.addLike(id).then((res) => {
+        return res;
+    }).catch((err) => {
+        console.log(`Ошибка запроса ${err}`);
+    });
+}
+
+function removeLike(id){
+    return cardApi.removeLike(id).then((res) => {
+        return res;
+    }).catch((err) => {
+        console.log(`Ошибка запроса ${err}`);
+    });
 }
