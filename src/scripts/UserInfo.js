@@ -2,6 +2,7 @@ export default class UserInfo {
     constructor(nameSelector, noteAboutUserSelector) {
         this._name = document.querySelector(nameSelector);
         this._note = document.querySelector(noteAboutUserSelector);
+        this._avatar = document.querySelector('.profile__image');
     }
 
     // Получение информации профиля
@@ -16,6 +17,10 @@ export default class UserInfo {
     setUserInfo(newName, newNote){
         this._name.textContent = newName;
         this._note.textContent = newNote;
+    }
+
+    updateAvatar(newAvatar){
+        this._avatar.setAttribute('src', newAvatar);
     }
 
 }
