@@ -36,21 +36,25 @@ const userInfo = new UserInfo('.profile__info-name', '.profile__info-description
 
 const initialInfoPromises = Promise.all([api.getInitialCards(), api.getUserInfo()]);
 
-let cardList = null;
+let currentUserID = null;
+const cardList = new Section({
+        items: [],
+        renderer: (cardItem) => {
+            const item = createCard(cardItem);
+            cardList.addItem(item, 'append');
+        }
+    },
+    '.elements'
+);
+
 initialInfoPromises.then((res) => {
-    cardList = new Section({
-            items: res[0][0],
-            renderer: (cardItem) => {
-                createCard(cardItem).then((res) => {
-                    cardList.addItem(res, 'append');
-                }).catch((err) => console.log(err));
-            }
-        },
-        '.elements'
-    );
+    currentUserID = res[1].id;
+    userInfo.setUserInfo(res[1].name, res[1].about);
+    userInfo.updateAvatar(res[1].avatar);
+    cardList.addInitialItems(res[0][0]);
     cardList.renderItems();
     return cardList;
-})
+}).catch((err) => console.log(`Ошибка запроса ${err}`))
 
 
 const config = {
@@ -122,49 +126,35 @@ changePersonalInfoPopupForm.setEventListeners();
 const addNewLocationPopupForm = new PopupWithForm(addNewPlacePopUp, (data) => {
     renderLoading(true, '.popup_add_new-place');
     api.putNewImage(data[place.name], data[url.name]).then((res) => {
-        createCard({name: res.name, link: res.link, desc: 'Место'}).then((res) => {
-            cardList.addItem(res, 'prepend');
-        });
+        const item = createCard({name: res.name, link: res.link, desc: 'Место'});
+        cardList.addItem(item, 'prepend');
         noItemsBlock.style.display = 'none';
         addNewLocationPopupForm.close();
     }).catch((err) => console.log(err)).finally(() => renderLoading(false, '.popup_add_new-place'));
 });
 addNewLocationPopupForm.setEventListeners();
 
-// установка данных пользователя в хедере
-function setUserInfo() {
-    api.getUserInfo().then((res) => {
-        userInfo.setUserInfo(res.name, res.about);
-        userInfo.updateAvatar(res.avatar);
-    }).catch((err) => console.log(err));
-}
-
-setUserInfo();
-
 // функция создания карточки
 function createCard(card) {
-    return initialInfoPromises.then((res) => {
-        if (card.likes === undefined) { // для новых карточек выставяем значение лайков 0
-            return new Card(card._id, card.name, card.link, 'Место', 0, '#element-template', res[1].id, res[1].id, handleOpenPopup, (element) => {
-                areYouSurePopup.open();
-                areYouSurePopup.setSubmitAction(() => {
-                    handleDeleteCardSubmitAction(element, card._id);
-                });
-            }, setLike, removeLike).createCard();
-        }
-        return new Card(card._id, card.name, card.link, 'Место', card.likes.length, '#element-template', card.owner._id, res[1].id, handleOpenPopup, (element) => {
+    if (card.likes === undefined) { // для новых карточек выставяем значение лайков 0
+        return new Card(card._id, card.name, card.link, 'Место', 0, '#element-template', currentUserID, currentUserID, handleOpenPopup, (cardElement) => {
             areYouSurePopup.open();
             areYouSurePopup.setSubmitAction(() => {
-                handleDeleteCardSubmitAction(element, card._id);
+                handleDeleteCardSubmitAction(card._id, cardElement);
             });
         }, setLike, removeLike).createCard();
-    })
+    }
+    return new Card(card._id, card.name, card.link, 'Место', card.likes.length, '#element-template', card.owner._id, currentUserID, handleOpenPopup, (cardElement) => {
+        areYouSurePopup.open();
+        areYouSurePopup.setSubmitAction(() => {
+            handleDeleteCardSubmitAction(card._id, cardElement);
+        });
+    }, setLike, removeLike).createCard();
 }
 
-function handleDeleteCardSubmitAction(element, id) {
+function handleDeleteCardSubmitAction(id, cardItem) {
     api.removeCard(id).then(() => {
-        element.remove();
-        element = null;
+        cardItem.removeCardItem();
         if (document.querySelector('.element') === null) {
             document.querySelector('.elements__no-items').style.display = 'block';
         }

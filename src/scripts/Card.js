@@ -44,7 +44,7 @@ export class Card {
             this._handleCardClick({name: this._title, link: this._url, description: this._description})
         });
         this._cardElement.querySelector('.element__delete-btn').addEventListener('click', () => {
-            this._handleDeleteBtnClick(this._cardElement);
+            this._handleDeleteBtnClick(this);
         });
     }
 
@@ -60,5 +60,10 @@ export class Card {
         this._setEventListeners();
 
         return this._cardElement;
+    }
+
+    removeCardItem() {
+        this._cardElement.remove();
+        this._cardElement = null;
     }
 }

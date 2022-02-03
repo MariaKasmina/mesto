@@ -5,6 +5,10 @@ export default class Section {
         this._renderer = renderer;
     }
 
+    addInitialItems(array){
+        this._initialArray = array;
+    }
+
     // Функция отрисовки карточек
     renderItems() {
         this._initialArray.forEach((item) => {
