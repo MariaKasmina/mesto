@@ -53,7 +53,6 @@ initialInfoPromises.then((res) => {
     userInfo.updateAvatar(res[1].avatar);
     cardList.addInitialItems(res[0][0]);
     cardList.renderItems();
-    return cardList;
 }).catch((err) => console.log(`Ошибка запроса ${err}`))
 
 
@@ -112,6 +111,7 @@ addNewLocationBtn.addEventListener('click', () => {
 
 avatar.addEventListener('click', () => {
     changeProfileImagePopupItem.open();
+    changeProfileImageFormValidity.resetValidation();
 });
 
 const changePersonalInfoPopupForm = new PopupWithForm(changePersonalInfoPopUp, (data) => {
@@ -137,14 +137,14 @@ addNewLocationPopupForm.setEventListeners();
 // функция создания карточки
 function createCard(card) {
     if (card.likes === undefined) { // для новых карточек выставяем значение лайков 0
-        return new Card(card._id, card.name, card.link, 'Место', 0, '#element-template', currentUserID, currentUserID, handleOpenPopup, (cardElement) => {
+        return new Card(card._id, card.name, card.link, 'Место', [], '#element-template', currentUserID, currentUserID, handleOpenPopup, (cardElement) => {
             areYouSurePopup.open();
             areYouSurePopup.setSubmitAction(() => {
                 handleDeleteCardSubmitAction(card._id, cardElement);
             });
         }, setLike, removeLike).createCard();
     }
-    return new Card(card._id, card.name, card.link, 'Место', card.likes.length, '#element-template', card.owner._id, currentUserID, handleOpenPopup, (cardElement) => {
+    return new Card(card._id, card.name, card.link, 'Место', card.likes, '#element-template', card.owner._id, currentUserID, handleOpenPopup, (cardElement) => {
         areYouSurePopup.open();
         areYouSurePopup.setSubmitAction(() => {
             handleDeleteCardSubmitAction(card._id, cardElement);
@@ -152,6 +152,7 @@ function createCard(card) {
     }, setLike, removeLike).createCard();
 }
 
+// функция действий по отправке формы удаления карточки
 function handleDeleteCardSubmitAction(id, cardItem) {
     api.removeCard(id).then(() => {
         cardItem.removeCardItem();
@@ -204,10 +205,9 @@ function removeLike(id) {
 // функция отрисовки загрузки на кнопках отправки форм
 function renderLoading(isLoading, form) {
     const submitBtn = document.querySelector(form).querySelector('.form__submit-button');
-    const prevSubmitBtnText = submitBtn.textContent;
     if (isLoading) {
         submitBtn.textContent = 'Сохранение...';
     } else {
-        submitBtn.textContent = prevSubmitBtnText;
+        submitBtn.textContent = 'Сохранить';
     }
 }
